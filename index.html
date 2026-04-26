@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tamary — milk tea カードアプリ提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:       #1a1814;
+  --ink-mid:   #3d3930;
+  --ink-light: #7a7267;
+  --paper:     #f5f2ed;
+  --paper-2:   #ede9e2;
+  --gold:      #b8985a;
+  --gold-lt:   #d4b87a;
+  --rule:      rgba(26,24,20,0.12);
+  --rule-gold: rgba(184,152,90,0.35);
+  --white:     #fdfcfa;
+
+  --f-serif: 'Noto Sans JP', sans-serif;
+  --f-sans:  'Noto Sans JP', sans-serif;
+  --f-latin: 'Noto Sans JP', sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  font-family: var(--f-sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   SLIDER SHELL
+   ============================================================ */
+.slides-viewport { width: 100vw; height: 100vh; overflow: hidden; position: relative; }
+
+.slides-track {
+  display: flex;
+  width: 100%; height: 100%;
+  transition: transform 0.72s cubic-bezier(0.77,0,0.18,1);
+  will-change: transform;
+}
+
+.slide {
+  flex: 0 0 100vw;
+  width: 100vw; height: 100vh;
+  position: relative; overflow: hidden;
+  background: var(--paper);
+}
+
+/* ============================================================
+   SHARED UTILITIES
+   ============================================================ */
+.rule-h { display: block; width: 100%; height: 1px; background: var(--rule); }
+.rule-h--gold { background: var(--rule-gold); }
+
+.folio {
+  font-family: var(--f-latin); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; color: var(--ink-light); text-transform: uppercase;
+}
+
+.index-tag {
+  font-family: var(--f-latin); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+}
+
+.headline-serif {
+  font-family: var(--f-serif); font-weight: 900; line-height: 1.15; color: var(--ink);
+}
+
+.body-text {
+  font-family: var(--f-sans); font-weight: 400;
+  font-size: 14px; line-height: 26px; color: var(--ink-mid);
+}
+
+.caption {
+  font-family: var(--f-latin); font-size: 10px; font-weight: 400;
+  letter-spacing: 0.06em; line-height: 16px; color: var(--ink-light);
+}
+
+/* ============================================================
+   NAV BAR
+   ============================================================ */
+.nav-bar {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 20px; z-index: 100;
+  background: rgba(26,24,20,0.82); backdrop-filter: blur(12px);
+  border: 1px solid rgba(184,152,90,0.2); padding: 10px 20px; border-radius: 40px;
+}
+
+.nav-btn {
+  width: 32px; height: 32px; border: none; background: transparent;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--gold); font-size: 14px; transition: opacity 0.2s;
+}
+.nav-btn:hover { opacity: 0.7; }
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+.nav-dots { display: flex; gap: 5px; align-items: center; }
+
+.nav-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(184,152,90,0.3); transition: all 0.3s; cursor: pointer; border: none;
+}
+.nav-dot.active { background: var(--gold); width: 18px; border-radius: 3px; }
+
+.nav-folio {
+  font-family: var(--f-latin); font-size: 10px;
+  letter-spacing: 0.14em; color: rgba(184,152,90,0.7);
+  min-width: 44px; text-align: center;
+}
+
+/* ============================================================
+   SLIDE 01 — COVER
+   ============================================================ */
+.s01 { background: var(--ink); }
+
+.s01-inner {
+  padding: clamp(36px,5vw,72px) clamp(40px,7vw,100px);
+  display: grid; grid-template-rows: 1fr auto 1fr;
+  height: 100%; position: relative;
+}
+
+.s01-top { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 4px; }
+
+.s01-brand {
+  font-family: var(--f-latin); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+}
+.s01-date {
+  font-family: var(--f-latin); font-size: 10px;
+  letter-spacing: 0.14em; color: rgba(253,252,250,0.4);
+}
+
+.s01-hero { display: flex; flex-direction: column; gap: 0; }
+
+.s01-eyebrow {
+  font-family: var(--f-latin); font-size: clamp(9px,1vw,11px); font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
+}
+
+.s01-title {
+  font-family: var(--f-latin); font-weight: 900;
+  font-size: clamp(72px,10vw,128px); line-height: 0.88;
+  color: var(--white); letter-spacing: -0.03em;
+}
+
+.s01-title-jp {
+  font-family: var(--f-serif); font-weight: 400;
+  font-size: clamp(13px,1.4vw,18px); line-height: 1;
+  color: rgba(253,252,250,0.55); letter-spacing: 0.12em;
+  margin-top: 18px; padding-left: 4px;
+}
+
+.s01-subtitle {
+  font-family: var(--f-sans); font-weight: 300;
+  font-size: clamp(12px,1.3vw,15px); line-height: 1.6;
+  color: rgba(253,252,250,0.6); margin-top: 28px;
+  padding-left: 4px; max-width: 480px;
+}
+
+.s01-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+
+.s01-index { display: flex; flex-direction: column; gap: 8px; }
+
+.s01-index-item {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--f-latin); font-size: 9px; font-weight: 400;
+  letter-spacing: 0.14em; color: rgba(253,252,250,0.38); text-transform: uppercase;
+}
+.s01-index-num { font-weight: 600; color: var(--gold); font-size: 8px; }
+
+.s01-meta { text-align: right; display: flex; flex-direction: column; gap: 4px; }
+.s01-meta-line {
+  font-family: var(--f-latin); font-size: 9px;
+  letter-spacing: 0.12em; color: rgba(253,252,250,0.3);
+}
+
+.s01-vrule {
+  position: absolute; right: clamp(140px,22vw,260px);
+  top: 0; bottom: 0; width: 1px;
+  background: rgba(184,152,90,0.08);
+}
+
+/* ============================================================
+   SLIDE 02 — CHALLENGE
+   ============================================================ */
+.s02-inner { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+
+.s02-left {
+  padding: clamp(40px,5vw,72px) clamp(36px,4vw,56px) clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid var(--rule);
+}
+
+.s02-right {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px) clamp(40px,5vw,72px) clamp(36px,4vw,56px);
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--paper-2);
+}
+
+.s02-headline {
+  font-family: var(--f-serif); font-weight: 900;
+  font-size: clamp(28px,3.5vw,48px); line-height: 1.2;
+  letter-spacing: -0.01em; color: var(--ink);
+}
+
+.challenge-item { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+.challenge-item:first-of-type { border-top: 1px solid var(--rule); }
+.challenge-q { font-family: var(--f-sans); font-size: 12px; font-weight: 700; color: var(--ink-mid); line-height: 20px; margin-bottom: 6px; }
+.challenge-a { font-family: var(--f-sans); font-size: 12px; font-weight: 400; color: var(--gold); line-height: 20px; }
+
+.s02-large-word {
+  font-family: var(--f-latin); font-weight: 900;
+  font-size: clamp(52px,7vw,96px); line-height: 0.88;
+  color: var(--ink); letter-spacing: -0.04em;
+}
+.s02-tagline {
+  font-family: var(--f-serif); font-size: clamp(14px,1.6vw,20px);
+  font-weight: 400; color: var(--ink-mid); line-height: 1.7; margin-top: 16px;
+}
+
+/* ============================================================
+   SLIDE 03 — WHAT IS TAMARY
+   ============================================================ */
+.s03-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; height: 100%;
+}
+.s03-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: clamp(20px,2.5vw,32px);
+}
+.s03-headline {
+  font-family: var(--f-serif); font-weight: 900;
+  font-size: clamp(28px,3.5vw,48px); line-height: 1.15; color: var(--ink);
+}
+.s03-desc {
+  font-family: var(--f-sans); font-size: 12px; font-weight: 400;
+  line-height: 22px; color: var(--ink-mid); max-width: 260px; text-align: right;
+}
+.analogy-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
+  border: 1px solid var(--rule); flex: 1;
+}
+.analogy-cell {
+  padding: clamp(18px,2.5vw,32px); border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 12px; position: relative;
+}
+.analogy-cell:last-child { border-right: none; }
+.analogy-num { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.2em; color: var(--gold); }
+.analogy-name { font-family: var(--f-latin); font-weight: 900; font-size: clamp(15px,1.8vw,22px); color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+.analogy-desc { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 20px; color: var(--ink-mid); }
+.analogy-tag { margin-top: auto; font-family: var(--f-latin); font-size: 9px; font-weight: 500; letter-spacing: 0.16em; color: var(--ink-light); text-transform: uppercase; }
+.analogy-arrow {
+  position: absolute; right: -13px; top: 50%; transform: translateY(-50%);
+  width: 26px; height: 26px; background: var(--paper); border: 1px solid var(--rule);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  z-index: 2; font-size: 10px; color: var(--gold);
+}
+
+/* ============================================================
+   SLIDE 04 — 3-LINE SUMMARY
+   ============================================================ */
+.s04-inner { display: grid; grid-template-columns: 48% 52%; height: 100%; }
+
+.s04-left {
+  background: var(--ink);
+  padding: clamp(40px,5vw,72px) clamp(36px,4vw,56px) clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.s04-right {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px) clamp(40px,5vw,72px) clamp(36px,4vw,56px);
+  display: flex; flex-direction: column; justify-content: center;
+  gap: clamp(16px,2.5vw,28px);
+}
+
+.s04-eyebrow { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
+.s04-headline { font-family: var(--f-serif); font-weight: 900; font-size: clamp(28px,3.5vw,48px); line-height: 1.25; color: var(--white); }
+
+.s04-tagline-block { display: flex; flex-direction: column; gap: 10px; }
+.s04-tagline-line {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-family: var(--f-sans); font-size: 13px; font-weight: 400;
+  line-height: 22px; color: rgba(253,252,250,0.75);
+}
+.s04-tagline-line::before {
+  content: ''; display: block; width: 16px; height: 1px;
+  background: var(--gold); margin-top: 11px; flex-shrink: 0;
+}
+
+.kpi-block { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+.kpi-block:first-of-type { border-top: 1px solid var(--rule); }
+.kpi-label { font-family: var(--f-latin); font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); }
+.kpi-value { font-family: var(--f-latin); font-weight: 900; font-size: clamp(26px,3.2vw,44px); line-height: 1; color: var(--ink); letter-spacing: -0.03em; }
+.kpi-sub { font-family: var(--f-sans); font-size: 11px; font-weight: 400; color: var(--ink-mid); line-height: 18px; }
+
+/* ============================================================
+   SLIDE 05 — STAMP
+   ============================================================ */
+.s05-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; height: 100%;
+}
+
+.slide-header {
+  display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px;
+}
+.slide-title {
+  font-family: var(--f-serif); font-weight: 900;
+  font-size: clamp(22px,2.8vw,38px); line-height: 1.2; color: var(--ink);
+}
+.slide-num-right {
+  font-family: var(--f-latin); font-weight: 900;
+  font-size: clamp(52px,7vw,92px); line-height: 0.85;
+  color: var(--paper-2); letter-spacing: -0.04em; align-self: flex-start;
+}
+
+.feature-rule { margin: 10px 0 clamp(14px,2vw,24px); }
+
+.feature-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(10px,1.8vw,20px); flex: 1;
+}
+.feature-item {
+  padding: clamp(14px,1.8vw,22px); border: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 7px;
+}
+.feature-item-label { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.feature-item-title { font-family: var(--f-sans); font-weight: 700; font-size: clamp(12px,1.3vw,15px); color: var(--ink); line-height: 1.3; }
+.feature-item-body { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 20px; color: var(--ink-mid); }
+.feature-item-note { margin-top: auto; font-family: var(--f-latin); font-size: 9px; letter-spacing: 0.08em; color: var(--ink-light); }
+
+/* ============================================================
+   SLIDE 06 — CHARGE
+   ============================================================ */
+.s06-inner { display: grid; grid-template-columns: 55% 45%; height: 100%; }
+
+.s06-left {
+  padding: clamp(40px,5vw,72px) clamp(32px,3.5vw,48px) clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid var(--rule);
+}
+.s06-right {
+  background: var(--ink);
+  padding: clamp(40px,5vw,72px) clamp(36px,5vw,72px) clamp(40px,5vw,72px) clamp(24px,3vw,40px);
+  display: flex; flex-direction: column; justify-content: center;
+  gap: clamp(14px,2vw,24px);
+}
+
+.charge-buttons-label { font-family: var(--f-latin); font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+.charge-buttons { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+.charge-btn { font-family: var(--f-latin); font-weight: 700; font-size: 12px; color: var(--ink); border: 1.5px solid var(--rule); padding: 7px 14px; letter-spacing: 0.02em; background: transparent; }
+.charge-btn--active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.charge-spec-row { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--rule); }
+.charge-spec-key { font-family: var(--f-sans); font-size: 11px; font-weight: 500; color: var(--ink-mid); }
+.charge-spec-val { font-family: var(--f-latin); font-size: 13px; font-weight: 700; color: var(--ink); }
+
+.s06-right-label { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+.s06-right-big { font-family: var(--f-latin); font-weight: 900; font-size: clamp(36px,5vw,68px); line-height: 0.9; color: var(--white); letter-spacing: -0.04em; }
+.s06-right-desc { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 22px; color: rgba(253,252,250,0.6); }
+
+/* ============================================================
+   SLIDE 07 — EXPIRY
+   ============================================================ */
+.s07-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; height: 100%;
+}
+.expiry-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
+  border: 1px solid var(--rule); margin-top: clamp(14px,2vw,24px); flex: 1;
+}
+.expiry-cell {
+  padding: clamp(18px,2.5vw,28px); border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.expiry-cell:last-child { border-right: none; }
+.expiry-label { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.expiry-object { font-family: var(--f-sans); font-weight: 700; font-size: clamp(13px,1.5vw,17px); color: var(--ink); margin-bottom: 5px; }
+.expiry-period { font-family: var(--f-latin); font-weight: 900; font-size: clamp(36px,5vw,64px); line-height: 0.9; color: var(--ink); letter-spacing: -0.04em; margin-bottom: 3px; }
+.expiry-unit { font-family: var(--f-sans); font-size: 12px; font-weight: 400; color: var(--ink-mid); }
+.expiry-base { font-family: var(--f-latin); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-light); margin-top: 7px; text-transform: uppercase; }
+
+.notify-section {
+  margin-top: clamp(14px,2vw,24px); padding: clamp(14px,1.8vw,20px);
+  border: 1px solid var(--rule-gold); display: flex; align-items: flex-start; gap: 18px;
+}
+.notify-pill {
+  font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold); background: rgba(184,152,90,0.1);
+  padding: 4px 10px; display: inline-block; white-space: nowrap;
+}
+.notify-text { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 22px; color: var(--ink-mid); flex: 1; }
+
+/* ============================================================
+   SLIDE 08 — 36 FEATURES
+   ============================================================ */
+.s08-inner { display: grid; grid-template-columns: 38% 62%; height: 100%; }
+.s08-left {
+  background: var(--paper-2);
+  padding: clamp(40px,5vw,72px) clamp(24px,3vw,40px) clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid var(--rule);
+}
+.s08-right {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px) clamp(40px,5vw,72px) clamp(24px,3vw,40px);
+  display: flex; flex-direction: column; justify-content: center; gap: clamp(12px,1.8vw,20px);
+  overflow-y: auto;
+}
+
+.feature-cat-head {
+  font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 7px;
+  display: flex; align-items: center; gap: 8px;
+}
+.feature-cat-head::after { content: ''; flex: 1; height: 1px; background: var(--rule-gold); }
+.feature-cat-items { display: flex; flex-wrap: wrap; gap: 4px; }
+.feature-tag {
+  font-family: var(--f-sans); font-size: 11px; font-weight: 400;
+  color: var(--ink-mid); padding: 2px 8px; border: 1px solid var(--rule); line-height: 18px;
+}
+
+/* ============================================================
+   SLIDE 09 — DATA-LIGHT
+   ============================================================ */
+.s09-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; height: 100%;
+}
+.data-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(18px,3vw,40px); flex: 1; margin-top: clamp(14px,2vw,24px);
+}
+.data-col { display: flex; flex-direction: column; }
+.data-col-head {
+  font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; padding: 9px 0; border-bottom: 2px solid var(--ink); margin-bottom: 0;
+}
+.data-col--tamary .data-col-head { border-color: var(--gold); color: var(--gold); }
+.data-col--square .data-col-head { border-color: var(--ink-light); color: var(--ink-mid); }
+.data-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--rule);
+  font-family: var(--f-sans); font-size: 12px; color: var(--ink-mid); line-height: 20px;
+}
+.data-row-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+.data-col--tamary .data-row-dot { background: var(--gold); }
+.data-col--square .data-row-dot { background: var(--ink-light); }
+.data-why {
+  margin-top: clamp(14px,2vw,22px); padding: 14px 18px;
+  border-left: 2px solid var(--gold); background: rgba(184,152,90,0.05);
+}
+.data-why-text { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 22px; color: var(--ink-mid); }
+
+/* ============================================================
+   SLIDE 10 — TECH STACK
+   ============================================================ */
+.s10-inner { display: grid; grid-template-columns: 50% 50%; height: 100%; }
+.s10-left {
+  padding: clamp(40px,5vw,72px) clamp(32px,3.5vw,48px) clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid var(--rule);
+}
+.s10-right {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px) clamp(40px,5vw,72px) clamp(32px,3.5vw,48px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.tech-stack-item {
+  padding: clamp(12px,1.8vw,20px) 0; border-bottom: 1px solid var(--rule);
+  display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: start;
+}
+.tech-stack-item:first-of-type { border-top: 1px solid var(--rule); }
+.tech-name { font-family: var(--f-latin); font-weight: 700; font-size: clamp(11px,1.1vw,13px); color: var(--ink); letter-spacing: -0.01em; line-height: 20px; }
+.tech-role { font-family: var(--f-sans); font-size: 12px; font-weight: 400; color: var(--ink-mid); line-height: 20px; }
+.tech-analogy { font-family: var(--f-sans); font-size: 11px; font-weight: 400; color: var(--ink-light); line-height: 17px; margin-top: 2px; font-style: italic; }
+
+/* ============================================================
+   SLIDE 11 — OPERATIONS
+   ============================================================ */
+.s11-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; height: 100%;
+}
+.ops-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(2,1fr); gap: clamp(10px,1.8vw,18px);
+  flex: 1; margin-top: clamp(14px,2vw,22px);
+}
+.ops-item { padding: clamp(16px,2.2vw,26px); border: 1px solid var(--rule); display: flex; flex-direction: column; gap: 8px; }
+.ops-num { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; color: var(--gold); }
+.ops-title { font-family: var(--f-sans); font-weight: 700; font-size: clamp(13px,1.3vw,15px); color: var(--ink); line-height: 1.3; }
+.ops-desc { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 20px; color: var(--ink-mid); flex: 1; }
+
+/* ============================================================
+   SLIDE 12 — LEGAL
+   ============================================================ */
+.s12-inner { display: grid; grid-template-columns: 42% 58%; height: 100%; }
+.s12-left {
+  background: var(--ink);
+  padding: clamp(40px,5vw,72px) clamp(24px,3vw,40px) clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.s12-right {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px) clamp(40px,5vw,72px) clamp(24px,3vw,40px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.legal-row { display: flex; align-items: flex-start; gap: 14px; padding: clamp(11px,1.6vw,17px) 0; border-bottom: 1px solid var(--rule); }
+.legal-row:first-of-type { border-top: 1px solid var(--rule); }
+.legal-law { font-family: var(--f-latin); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--gold); min-width: 74px; padding-top: 2px; flex-shrink: 0; }
+.legal-desc { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 21px; color: var(--ink-mid); }
+.legal-note { font-size: 10px; color: var(--ink-light); display: block; margin-top: 2px; }
+
+.responsibility-table { border: 1px solid rgba(184,152,90,0.25); }
+.resp-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid rgba(253,252,250,0.08); }
+.resp-row:last-child { border-bottom: none; }
+.resp-cell { padding: 10px 13px; font-family: var(--f-sans); font-size: 11px; font-weight: 400; color: rgba(253,252,250,0.65); border-right: 1px solid rgba(253,252,250,0.08); line-height: 17px; }
+.resp-cell:last-child { border-right: none; }
+.resp-cell--head { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: rgba(184,152,90,0.06); }
+
+/* ============================================================
+   SLIDE 13 — PHASE 1.5 / 2
+   ============================================================ */
+.s13-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; height: 100%;
+}
+.phase-split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  border: 1px solid var(--rule); flex: 1; margin-top: clamp(14px,2vw,22px);
+}
+.phase-panel {
+  padding: clamp(18px,2.5vw,30px); border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column;
+}
+.phase-panel:last-child { border-right: none; }
+.phase-label { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+.phase-title { font-family: var(--f-serif); font-weight: 900; font-size: clamp(16px,2vw,26px); color: var(--ink); line-height: 1.2; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.phase-timing { font-family: var(--f-latin); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--ink-light); margin-bottom: 14px; }
+.phase-features { list-style: none; display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.phase-features li { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 20px; color: var(--ink-mid); display: flex; gap: 8px; align-items: flex-start; }
+.phase-features li::before { content: ''; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
+.phase-cost { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--rule); font-family: var(--f-latin); font-weight: 900; font-size: clamp(16px,1.8vw,22px); color: var(--ink); letter-spacing: -0.02em; }
+.phase-cost-label { font-size: 9px; font-weight: 400; color: var(--ink-light); letter-spacing: 0.1em; display: block; margin-bottom: 2px; }
+
+/* ============================================================
+   SLIDE 14 — ESTIMATE
+   ============================================================ */
+.s14-inner { display: grid; grid-template-columns: 50% 50%; height: 100%; }
+.s14-left {
+  padding: clamp(40px,5vw,72px) clamp(32px,3.5vw,48px) clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid var(--rule);
+}
+.s14-right {
+  background: var(--paper-2);
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px) clamp(40px,5vw,72px) clamp(32px,3.5vw,48px);
+  display: flex; flex-direction: column; justify-content: center;
+  gap: clamp(12px,1.8vw,20px);
+}
+
+.price-label { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+.price-main { font-family: var(--f-latin); font-weight: 900; font-size: clamp(40px,5.5vw,76px); line-height: 0.9; color: var(--ink); letter-spacing: -0.04em; }
+.price-sub { font-family: var(--f-sans); font-size: 12px; color: var(--ink-light); margin-top: 5px; line-height: 19px; }
+
+.schedule-row { display: flex; align-items: flex-start; gap: 12px; padding: clamp(9px,1.3vw,14px) 0; border-bottom: 1px solid var(--rule); }
+.schedule-row:first-of-type { border-top: 1px solid var(--rule); }
+.schedule-phase-tag { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); min-width: 72px; padding-top: 2px; flex-shrink: 0; }
+.schedule-duration { font-family: var(--f-latin); font-weight: 700; font-size: clamp(13px,1.5vw,17px); color: var(--ink); letter-spacing: -0.01em; display: block; }
+.schedule-desc { font-family: var(--f-sans); font-size: 11px; font-weight: 400; color: var(--ink-mid); line-height: 17px; display: block; margin-top: 2px; }
+
+.market-compare { margin-top: 14px; padding: 13px 16px; border: 1px solid var(--rule); display: flex; gap: 20px; }
+.market-item { display: flex; flex-direction: column; gap: 2px; }
+.market-label { font-family: var(--f-latin); font-size: 8px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-light); }
+.market-val { font-family: var(--f-latin); font-weight: 700; font-size: 12px; color: var(--ink-mid); }
+.market-val--highlight { color: var(--gold); }
+
+/* ============================================================
+   SLIDE 15 — IP
+   ============================================================ */
+.s15-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: flex; flex-direction: column; height: 100%;
+}
+.ip-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
+  border: 1px solid var(--rule); flex: 1; margin-top: clamp(14px,2vw,22px);
+}
+.ip-col { padding: clamp(18px,2.5vw,28px); border-right: 1px solid var(--rule); display: flex; flex-direction: column; }
+.ip-col:last-child { border-right: none; }
+.ip-col-head { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); padding-bottom: 9px; border-bottom: 1px solid var(--rule); margin-bottom: 12px; }
+.ip-owner { font-family: var(--f-serif); font-weight: 900; font-size: clamp(15px,1.7vw,20px); color: var(--ink); margin-bottom: 10px; line-height: 1.2; }
+.ip-items { list-style: none; display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.ip-items li { font-family: var(--f-sans); font-size: 12px; font-weight: 400; color: var(--ink-mid); line-height: 19px; display: flex; gap: 8px; align-items: flex-start; }
+.ip-items li::before { content: '—'; color: var(--ink-light); flex-shrink: 0; font-family: var(--f-latin); }
+.ip-note { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule); font-family: var(--f-latin); font-size: 10px; color: var(--ink-light); line-height: 15px; }
+
+/* ============================================================
+   SLIDE 16 — CLOSING
+   ============================================================ */
+.s16 { background: var(--ink); }
+.s16-inner {
+  padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
+  display: grid; grid-template-rows: auto 1fr auto;
+  height: 100%;
+}
+.s16-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding-bottom: 18px; border-bottom: 1px solid rgba(253,252,250,0.08);
+}
+.s16-brand { font-family: var(--f-latin); font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
+.s16-middle {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(28px,4vw,56px); align-content: center;
+  padding: clamp(20px,3vw,36px) 0;
+}
+.s16-main-message { display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.s16-headline { font-family: var(--f-serif); font-weight: 900; font-size: clamp(24px,3.2vw,44px); line-height: 1.2; color: var(--white); }
+.s16-sub { font-family: var(--f-sans); font-size: 13px; font-weight: 300; line-height: 23px; color: rgba(253,252,250,0.6); max-width: 360px; }
+
+.nextstep-list { list-style: none; display: flex; flex-direction: column; }
+.nextstep-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(253,252,250,0.08); }
+.nextstep-item:first-child { border-top: 1px solid rgba(253,252,250,0.08); }
+.nextstep-num { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.2em; color: var(--gold); padding-top: 2px; min-width: 26px; flex-shrink: 0; }
+.nextstep-title { font-family: var(--f-sans); font-weight: 700; font-size: 13px; color: var(--white); line-height: 20px; }
+.nextstep-desc { font-family: var(--f-sans); font-size: 11px; font-weight: 400; color: rgba(253,252,250,0.5); line-height: 17px; }
+
+.s16-bottom {
+  padding-top: 18px; border-top: 1px solid rgba(253,252,250,0.08);
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.s16-contract-note { font-family: var(--f-sans); font-size: 11px; font-weight: 400; color: rgba(253,252,250,0.38); line-height: 18px; }
+.s16-price-label { font-family: var(--f-latin); font-size: 8px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.s16-price-val { font-family: var(--f-latin); font-weight: 900; font-size: clamp(20px,2.6vw,34px); color: var(--white); letter-spacing: -0.03em; }
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  html, body { overflow: visible; height: auto; }
+  .slides-viewport { overflow: visible; height: auto; }
+  .slides-track { flex-direction: column; transform: none !important; transition: none; }
+  .slide { flex: none; width: 100%; height: 100vh; page-break-after: always; }
+  .nav-bar { display: none; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 680px) {
+  .s02-inner, .s04-inner, .s06-inner, .s08-inner, .s10-inner,
+  .s12-inner, .s14-inner { grid-template-columns: 1fr; }
+  .s02-right, .s06-right, .s10-right, .s12-right { display: none; }
+  .analogy-grid, .expiry-grid, .ip-grid, .phase-split,
+  .feature-grid, .ops-grid { grid-template-columns: 1fr; }
+  .analogy-cell, .expiry-cell, .ip-col, .phase-panel { border-right: none; border-bottom: 1px solid var(--rule); }
+  .slide-num-right { display: none; }
+  .s16-middle { grid-template-columns: 1fr; }
+  .data-split { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="slides-viewport" id="viewport">
+  <div class="slides-track" id="track">
+
+    <!-- 01 COVER -->
+    <div class="slide s01" role="region" aria-label="表紙">
+      <div class="s01-inner">
+        <div class="s01-top">
+          <span class="s01-brand">milk tea × Tamary</span>
+          <span class="s01-date">2026.04</span>
+        </div>
+        <div class="s01-hero">
+          <span class="s01-eyebrow">Proposal — Phase 1 Development</span>
+          <h1 class="s01-title">Tamary</h1>
+          <p class="s01-title-jp">タマリー — milk tea カードアプリ</p>
+          <p class="s01-subtitle">スタンプカード・チャージ残高・特典引換を<br>1つのスマホアプリにまとめる、milk tea 専用の会員サービス</p>
+        </div>
+        <div class="s01-bottom">
+          <div class="s01-index">
+            <div class="s01-index-item"><span class="s01-index-num">01</span>課題と解決</div>
+            <div class="s01-index-item"><span class="s01-index-num">02</span>Tamary とは</div>
+            <div class="s01-index-item"><span class="s01-index-num">03</span>3行サマリ・KPI</div>
+            <div class="s01-index-item"><span class="s01-index-num">04–08</span>Phase 1 全機能</div>
+            <div class="s01-index-item"><span class="s01-index-num">09–12</span>データ・技術・法務</div>
+            <div class="s01-index-item"><span class="s01-index-num">13–15</span>見積・知財・契約</div>
+            <div class="s01-index-item"><span class="s01-index-num">16</span>次のステップ</div>
+          </div>
+          <div class="s01-meta">
+            <span class="s01-meta-line">宛先: 株式会社 milk tea 御中</span>
+            <span class="s01-meta-line">有効期限: 発行後30日</span>
+            <span class="s01-meta-line">仕様書 v9.1.3 / 2026-04-26</span>
+          </div>
+        </div>
+        <div class="s01-vrule" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- 02 CHALLENGE -->
+    <div class="slide" role="region" aria-label="課題と解決">
+      <div class="s02-inner">
+        <div class="s02-left">
+          <div>
+            <span class="index-tag">01 — Challenge</span>
+            <div style="height:16px"></div>
+            <h2 class="s02-headline">今 milk tea に<br>起きていること</h2>
+          </div>
+          <div>
+            <div class="challenge-item">
+              <p class="challenge-q">紙カードは忘れられる・失くされる</p>
+              <p class="challenge-a">→ スマホなら忘れにくく、機種変更しても引き継げる</p>
+            </div>
+            <div class="challenge-item">
+              <p class="challenge-q">リピート客を把握できない</p>
+              <p class="challenge-a">→ 誰がいつどれくらい来ているか数字で把握できる</p>
+            </div>
+            <div class="challenge-item">
+              <p class="challenge-q">ブランド資産が積み上がらない</p>
+              <p class="challenge-a">→ アプリと会員データが milk tea の資産になる</p>
+            </div>
+          </div>
+          <div class="folio">02 / 16</div>
+        </div>
+        <div class="s02-right">
+          <span class="index-tag" style="color:var(--ink-light)">Solution</span>
+          <div style="height:24px"></div>
+          <p class="s02-large-word">来店<br>頻度を<br>仕組み<br>で作る</p>
+          <p class="s02-tagline">スタンプと特典が<br>「もう一杯行きたい理由」を<br>自動的に生み出す</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 WHAT IS TAMARY -->
+    <div class="slide" role="region" aria-label="Tamaryとは">
+      <div class="s03-inner">
+        <div class="s03-top">
+          <div>
+            <span class="index-tag">02 — What is Tamary</span>
+            <div style="height:12px"></div>
+            <h2 class="s03-headline">身近なアプリで<br>たとえると</h2>
+          </div>
+          <p class="s03-desc">Coke ON Pay + スタバアプリを合体させたものを<br>milk tea のお店専用として提供する仕組みです</p>
+        </div>
+        <div class="rule-h" style="margin-bottom:clamp(16px,2.5vw,28px)"></div>
+        <div class="analogy-grid">
+          <div class="analogy-cell">
+            <span class="analogy-num">01</span>
+            <p class="analogy-name">Coke ON Pay</p>
+            <p class="analogy-desc">スマホをかざすとスタンプが貯まる、チャージ残高で支払える</p>
+            <p class="analogy-tag">Stamp · Charge</p>
+            <span class="analogy-arrow" aria-hidden="true">＋</span>
+          </div>
+          <div class="analogy-cell">
+            <span class="analogy-num">02</span>
+            <p class="analogy-name">スタバアプリ</p>
+            <p class="analogy-desc">自分の店ブランドのデザイン、チャージ残高、特典引換</p>
+            <p class="analogy-tag">Brand · Reward</p>
+            <span class="analogy-arrow" aria-hidden="true">＝</span>
+          </div>
+          <div class="analogy-cell">
+            <span class="analogy-num">03</span>
+            <p class="analogy-name" style="color:var(--gold)">Tamary</p>
+            <p class="analogy-desc">milk tea のお客さんが使う「milk tea のスマホカード」1枚で全部完結</p>
+            <p class="analogy-tag">milk tea Only</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 SUMMARY / KPI -->
+    <div class="slide" role="region" aria-label="3行サマリ">
+      <div class="s04-inner">
+        <div class="s04-left">
+          <div>
+            <span class="s04-eyebrow">03 — Summary</span>
+            <div style="height:16px"></div>
+            <h2 class="s04-headline">3行で<br>言うと</h2>
+          </div>
+          <div>
+            <div class="s04-tagline-block">
+              <div class="s04-tagline-line">milk tea 専用のスタンプカード＆プリペイドアプリを作ります</div>
+              <div class="s04-tagline-line">既存の Square レジをそのまま活かし、追加機器は不要です</div>
+              <div class="s04-tagline-line">完成したものは milk tea の所有物になります</div>
+            </div>
+          </div>
+          <div class="folio" style="color:rgba(253,252,250,0.3)">04 / 16</div>
+        </div>
+        <div class="s04-right">
+          <div class="kpi-block">
+            <span class="kpi-label">Development Cost</span>
+            <span class="kpi-value">20–25<span style="font-size:0.42em;letter-spacing:0;font-weight:700;color:var(--ink-mid)"> 万円</span></span>
+            <span class="kpi-sub">税別・一括・固定価格（追加請求なし）<br>通常相場の10分の1以下</span>
+          </div>
+          <div class="kpi-block">
+            <span class="kpi-label">Delivery</span>
+            <span class="kpi-value">約1<span style="font-size:0.42em;letter-spacing:0;font-weight:700;color:var(--ink-mid)"> ヶ月</span></span>
+            <span class="kpi-sub">実装完了（主業並行）+ ベータ2–3週<br>集中稼働なら2–3週間</span>
+          </div>
+          <div class="kpi-block">
+            <span class="kpi-label">Ownership</span>
+            <span class="kpi-value" style="font-size:clamp(18px,2.2vw,30px);line-height:1.1;letter-spacing:-0.02em">milk tea<br>全面譲渡</span>
+            <span class="kpi-sub">コード・設計・商標すべて milk tea 所有<br>将来の展開・売却も milk tea の判断で</span>
+          </div>
+          <div class="kpi-block">
+            <span class="kpi-label">Monthly Running Cost</span>
+            <span class="kpi-value">$5<span style="font-size:0.42em;letter-spacing:0;font-weight:700;color:var(--ink-mid)"> – 15 / 月</span></span>
+            <span class="kpi-sub">Cloudflare Workers + Supabase + Clerk + ドメイン</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 STAMP -->
+    <div class="slide" role="region" aria-label="スタンプカード機能">
+      <div class="s05-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">04 — Phase 1 Functions</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">スタンプカード</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">05</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <span class="feature-item-label">Accrual</span>
+            <h3 class="feature-item-title">スタンプの付与</h3>
+            <p class="feature-item-body">ノーマルサイズ 1個 / メガサイズ 2個。複数杯注文は商品数に応じて自動加算。QR提示 → Square レジスキャンで付与。</p>
+            <span class="feature-item-note">対象: ドリンクのみ（フード・グッズ除外）</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-item-label">Reward 5</span>
+            <h3 class="feature-item-title">5個でキーホルダー</h3>
+            <p class="feature-item-body">スタンプ5個でキーホルダー引換が有効化。お客さんが「使う」を選び、スタッフが確認して商品を渡す。引換後は0個にリセット。</p>
+            <span class="feature-item-note">景表法セーフ（取引価額20%上限内）</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-item-label">Reward 10</span>
+            <h3 class="feature-item-title">10個でドリンク1杯無料</h3>
+            <p class="feature-item-body">スタンプ10個でドリンク無料引換券を自動発行。フラッペ以外、トッピング無料変更可。引換券は最大5枚ストック。満タン中は新スタンプが貯まらない。</p>
+            <span class="feature-item-note">引換券有効期限: 発行日から1年</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-item-label">Machine Change</span>
+            <h3 class="feature-item-title">機種変更・紛失しても安心</h3>
+            <p class="feature-item-body">同じアカウントでログインし直せば残高もスタンプも引き継がれる。Apple / Google アカウントでも登録可能。</p>
+            <span class="feature-item-note">メール+パスワード / Apple / Google SSO 対応</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 CHARGE -->
+    <div class="slide" role="region" aria-label="チャージ式残高">
+      <div class="s06-inner">
+        <div class="s06-left">
+          <div>
+            <span class="index-tag">04 — Phase 1 Functions</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">チャージ式残高</h2>
+            <div style="height:18px"></div>
+            <div class="rule-h"></div>
+          </div>
+          <div>
+            <div style="height:16px"></div>
+            <p class="charge-buttons-label">Fixed Amount Buttons</p>
+            <div class="charge-buttons">
+              <span class="charge-btn">¥500</span>
+              <span class="charge-btn charge-btn--active">¥1,000</span>
+              <span class="charge-btn">¥2,000</span>
+              <span class="charge-btn">¥5,000</span>
+              <span class="charge-btn" style="font-weight:400;font-size:11px;padding:7px 10px">任意（100円刻み）</span>
+            </div>
+            <div class="charge-spec-row"><span class="charge-spec-key">チャージ単位</span><span class="charge-spec-val">100円単位</span></div>
+            <div class="charge-spec-row"><span class="charge-spec-key">1回の上限</span><span class="charge-spec-val">10,000円</span></div>
+            <div class="charge-spec-row"><span class="charge-spec-key">保持残高の上限</span><span class="charge-spec-val">10,000円</span></div>
+            <div class="charge-spec-row"><span class="charge-spec-key">支払い方法</span><span class="charge-spec-val">Square 対応決済</span></div>
+            <div class="charge-spec-row"><span class="charge-spec-key">残高で支払い</span><span class="charge-spec-val">スタンプ付与あり</span></div>
+          </div>
+          <div class="folio">06 / 16</div>
+        </div>
+        <div class="s06-right">
+          <span class="s06-right-label">Prepaid Balance</span>
+          <p class="s06-right-big">先<br>払い<br>で<br>固定客</p>
+          <p class="s06-right-desc">残高がアプリに貯まっていると、他の店ではなく milk tea を選ぶ動機が自然に生まれます。</p>
+          <div style="height:1px;background:rgba(253,252,250,0.08)"></div>
+          <p class="s06-right-desc" style="font-size:11px;color:rgba(253,252,250,0.4)">未使用残高が1,000万円を超えた場合は関東財務局への届出が必要（管理画面で常時把握可、800–900万円で自動アラート）。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 EXPIRY -->
+    <div class="slide" role="region" aria-label="有効期限と通知">
+      <div class="s07-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">04 — Phase 1 Functions</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">有効期限と失効前通知</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">07</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+        <div class="expiry-grid">
+          <div class="expiry-cell">
+            <div>
+              <p class="expiry-label">Stamp</p>
+              <p class="expiry-object">スタンプ</p>
+              <p class="expiry-period">6</p>
+              <p class="expiry-unit">ヶ月</p>
+              <p class="expiry-base">最終付与日から起算</p>
+            </div>
+            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px">6ヶ月以内に追加付与があれば起算日更新→失効回避</p>
+          </div>
+          <div class="expiry-cell">
+            <div>
+              <p class="expiry-label">Coupon</p>
+              <p class="expiry-object">引換券</p>
+              <p class="expiry-period">1</p>
+              <p class="expiry-unit">年</p>
+              <p class="expiry-base">発行日から起算</p>
+            </div>
+            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px">発行から1年で失効。起算日の更新なし</p>
+          </div>
+          <div class="expiry-cell">
+            <div>
+              <p class="expiry-label">Balance</p>
+              <p class="expiry-object">チャージ残高</p>
+              <p class="expiry-period">6</p>
+              <p class="expiry-unit">ヶ月</p>
+              <p class="expiry-base">最終利用日から起算</p>
+            </div>
+            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px">6ヶ月以内の利用で起算日更新。資金決済法セーフハーバー適合</p>
+          </div>
+        </div>
+        <div class="notify-section">
+          <span class="notify-pill">Email Notice</span>
+          <p class="notify-text">失効<strong style="color:var(--ink)"> 30日前・7日前</strong>にメールでお知らせを自動送信。特定電子メール法の「重要通知」扱いのため、お客さんの事前同意なしに送信可能。プッシュ通知は Phase 1.5 で追加予定。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 36 FEATURES -->
+    <div class="slide" role="region" aria-label="36機能サマリ">
+      <div class="s08-inner">
+        <div class="s08-left">
+          <div>
+            <span class="index-tag">04 — Phase 1 Scope</span>
+            <div style="height:12px"></div>
+            <h2 class="headline-serif" style="font-size:clamp(26px,3.2vw,44px);line-height:1.15">Phase 1<br><span style="font-family:var(--f-latin);font-weight:900;font-size:clamp(40px,5vw,68px);line-height:0.9;letter-spacing:-0.04em">36</span><br><span style="font-family:var(--f-sans);font-size:0.42em;font-weight:400;letter-spacing:0;vertical-align:super;color:var(--ink-mid)"> 機能</span></h2>
+            <div style="height:14px"></div>
+            <p class="body-text" style="font-size:12px;line-height:22px">特商法表記ページを含む全36項目。開発費 20–25万円の固定価格スコープ内。</p>
+          </div>
+          <div>
+            <p class="caption">* このスコープを超える機能追加・仕様変更は別途見積協議となります</p>
+          </div>
+        </div>
+        <div class="s08-right">
+          <div class="feature-category">
+            <p class="feature-cat-head">会員 / 認証</p>
+            <div class="feature-cat-items">
+              <span class="feature-tag">会員登録・ログイン</span>
+              <span class="feature-tag">Apple / Google SSO</span>
+              <span class="feature-tag">QRコード会員証</span>
+              <span class="feature-tag">機種変更・引き継ぎ</span>
+            </div>
+          </div>
+          <div class="feature-category">
+            <p class="feature-cat-head">スタンプ</p>
+            <div class="feature-cat-items">
+              <span class="feature-tag">スタンプ付与（ノーマル/メガ）</span>
+              <span class="feature-tag">複数杯加算</span>
+              <span class="feature-tag">5個でキーホルダー</span>
+              <span class="feature-tag">10個でドリンク引換券</span>
+              <span class="feature-tag">引換券5枚上限管理</span>
+              <span class="feature-tag">スタンプ6ヶ月失効</span>
+            </div>
+          </div>
+          <div class="feature-category">
+            <p class="feature-cat-head">チャージ残高</p>
+            <div class="feature-cat-items">
+              <span class="feature-tag">100円単位チャージ</span>
+              <span class="feature-tag">固定額ボタン</span>
+              <span class="feature-tag">残高払い</span>
+              <span class="feature-tag">10,000円上限</span>
+              <span class="feature-tag">残高6ヶ月失効</span>
+              <span class="feature-tag">FIFO残高消費</span>
+            </div>
+          </div>
+          <div class="feature-category">
+            <p class="feature-cat-head">特典 / 通知 / 運用</p>
+            <div class="feature-cat-items">
+              <span class="feature-tag">引換券1年失効</span>
+              <span class="feature-tag">失効前メール通知</span>
+              <span class="feature-tag">スタッフ管理画面</span>
+              <span class="feature-tag">手動スタンプ調整</span>
+              <span class="feature-tag">操作ログ記録</span>
+              <span class="feature-tag">Sentry監視</span>
+              <span class="feature-tag">障害時代替UI</span>
+              <span class="feature-tag">フィーチャーフラグ</span>
+              <span class="feature-tag">段階ローンチ</span>
+            </div>
+          </div>
+          <div class="feature-category">
+            <p class="feature-cat-head">法務 / セキュリティ</p>
+            <div class="feature-cat-items">
+              <span class="feature-tag">特商法表記ページ</span>
+              <span class="feature-tag">APPI 5要件</span>
+              <span class="feature-tag">OAuth 2.0 + PKCE</span>
+              <span class="feature-tag">AES-256暗号化</span>
+              <span class="feature-tag">プライバシーポリシー導線</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 DATA-LIGHT -->
+    <div class="slide" role="region" aria-label="データの扱い">
+      <div class="s09-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">05 — Data Design</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">Tamary は何を持ち、<br>何を持たないか</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">09</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+        <div class="data-split">
+          <div class="data-col data-col--tamary">
+            <p class="data-col-head">Tamary が持つもの（最小限）</p>
+            <div class="data-row"><span class="data-row-dot"></span>認証ID（Clerk の user_id のみ）</div>
+            <div class="data-row"><span class="data-row-dot"></span>マッピング（user_id × 加盟店ID × Square Customer ID）</div>
+            <div class="data-row"><span class="data-row-dot"></span>スタンプ発行履歴（失効管理用）</div>
+            <div class="data-row"><span class="data-row-dot"></span>操作ログ（監査用）</div>
+          </div>
+          <div class="data-col data-col--square">
+            <p class="data-col-head">Square が持つもの（Tamary は保持しない）</p>
+            <div class="data-row"><span class="data-row-dot"></span>氏名・メール・電話・住所</div>
+            <div class="data-row"><span class="data-row-dot"></span>チャージ残高・ポイント残高</div>
+            <div class="data-row"><span class="data-row-dot"></span>決済履歴・購買履歴</div>
+            <div class="data-row"><span class="data-row-dot"></span>カード情報（PCI-DSS 準拠管理）</div>
+          </div>
+        </div>
+        <div class="data-why">
+          <p class="data-why-text"><strong style="color:var(--gold)">なぜこの作りか。</strong> Tamary 側から情報が漏れても、マッピング情報だけでは氏名等が特定できない設計。個人情報保護の一次責任は上場企業・PCI-DSS 準拠の Square Japan が担う。AN 側の保有個人情報リスクを最小化し、消費者向け責任主体は milk tea。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 TECH STACK -->
+    <div class="slide" role="region" aria-label="技術基盤">
+      <div class="s10-inner">
+        <div class="s10-left">
+          <div>
+            <span class="index-tag">05 — Infrastructure</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">技術基盤<br>（ビジネス目線で）</h2>
+            <div style="height:14px"></div>
+            <p class="body-text" style="font-size:12px;line-height:22px">今 milk tea が使っている Square レジはそのまま。追加で必要な機器はありません。</p>
+          </div>
+          <div>
+            <div class="rule-h" style="margin-bottom:12px"></div>
+            <p class="caption">ホスティング第一候補:<br>Cloudflare Workers + OpenNext<br>（世界中の主要都市にサーバーがある高速配信 + DDoS・WAF 標準装備）<br><br>フォールバック: Vercel<br>ドメイン: tamary.app（年1,500円程度、milk tea 名義）</p>
+          </div>
+          <div class="folio">10 / 16</div>
+        </div>
+        <div class="s10-right">
+          <div class="tech-stack-item">
+            <span class="tech-name">Square</span>
+            <div><p class="tech-role">決済・会員・残高・スタンプの基盤</p><p class="tech-analogy">今 milk tea が使っているレジ、そのまま</p></div>
+          </div>
+          <div class="tech-stack-item">
+            <span class="tech-name">Supabase</span>
+            <div><p class="tech-role">Tamary 側のデータベース（マッピング・ログ・暗号化トークン）</p><p class="tech-analogy">AES-256 暗号化機構付きのデータ保管庫</p></div>
+          </div>
+          <div class="tech-stack-item">
+            <span class="tech-name">Clerk</span>
+            <div><p class="tech-role">認証基盤（メール+パスワード / Apple / Google ログイン）</p><p class="tech-analogy">Apple / Google ログインの裏側で動く認証専用サービス</p></div>
+          </div>
+          <div class="tech-stack-item">
+            <span class="tech-name">PWA</span>
+            <div><p class="tech-role">お客さんが触るスマホ画面（アプリストア審査不要）</p><p class="tech-analogy">スマホのホーム画面に追加するとアプリのように使える Web サービス</p></div>
+          </div>
+          <div class="tech-stack-item">
+            <span class="tech-name">Cloudflare<br>+ OpenNext</span>
+            <div><p class="tech-role">アプリの公開基盤（月 $5 で安定運用）</p><p class="tech-analogy">世界中の主要都市にサーバー。DDoS・WAF 標準装備</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 OPERATIONS -->
+    <div class="slide" role="region" aria-label="運用面の柔軟性">
+      <div class="s11-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">05 — Operations</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">本番運用リスクを下げる<br>4つの仕組み</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">11</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+        <div class="ops-grid">
+          <div class="ops-item">
+            <span class="ops-num">01</span>
+            <h3 class="ops-title">段階ローンチ</h3>
+            <p class="ops-desc">1店舗で2–3週間の先行ベータを実施してから全3店舗へ展開。問題発生時の影響範囲を1店舗内に限定できる。</p>
+          </div>
+          <div class="ops-item">
+            <span class="ops-num">02</span>
+            <h3 class="ops-title">フィーチャーフラグ</h3>
+            <p class="ops-desc">チャージ単位・上限額・固定額ボタンの値を、再デプロイ不要で運用中に変更可能。Square の実挙動に応じた事後調整にも対応。</p>
+          </div>
+          <div class="ops-item">
+            <span class="ops-num">03</span>
+            <h3 class="ops-title">障害時の代替UI</h3>
+            <p class="ops-desc">機能が一時停止した場合、アプリ内に「本日はレジで現金/カード決済をご利用ください」と自動表示。お客様体験を損なわないフェイルソフト設計。</p>
+          </div>
+          <div class="ops-item">
+            <span class="ops-num">04</span>
+            <h3 class="ops-title">リアルタイム監視</h3>
+            <p class="ops-desc">Sentry でエラーを即時検知し、Slack に通知。問題発生時に AN 側で迅速に状況確認・対応できる体制をローンチと同時に整える。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 LEGAL -->
+    <div class="slide" role="region" aria-label="法的整理">
+      <div class="s12-inner">
+        <div class="s12-left">
+          <div>
+            <span class="index-tag" style="color:var(--gold)">05 — Legal</span>
+            <div style="height:12px"></div>
+            <h2 class="headline-serif" style="font-size:clamp(22px,2.8vw,38px);line-height:1.2;color:var(--white)">法的整理と<br>責任分担</h2>
+          </div>
+          <div>
+            <div class="responsibility-table">
+              <div class="resp-row">
+                <div class="resp-cell resp-cell--head">法域</div>
+                <div class="resp-cell resp-cell--head">責任主体</div>
+              </div>
+              <div class="resp-row"><div class="resp-cell">決済・カード情報保護</div><div class="resp-cell">Square</div></div>
+              <div class="resp-row"><div class="resp-cell">チャージ残高の発行主体</div><div class="resp-cell">milk tea</div></div>
+              <div class="resp-row"><div class="resp-cell">特商法表記</div><div class="resp-cell">milk tea</div></div>
+              <div class="resp-row"><div class="resp-cell">プライバシーポリシー</div><div class="resp-cell">milk tea</div></div>
+              <div class="resp-row"><div class="resp-cell">システム動作・セキュリティ</div><div class="resp-cell">AN（技術提供者）</div></div>
+            </div>
+            <p class="caption" style="color:rgba(253,252,250,0.3);margin-top:7px">事業主体は milk tea。AN は外注エンジニアとして技術提供のみ。</p>
+          </div>
+          <div class="folio" style="color:rgba(253,252,250,0.3)">12 / 16</div>
+        </div>
+        <div class="s12-right">
+          <div class="legal-row">
+            <span class="legal-law">特商法</span>
+            <div class="legal-desc">アプリ内に特商法表記ページを独立配置（Phase 1 必須）。スターバックス Mobile Order &amp; Pay 形式で8項目を記載。milk tea 側で事業者名・連絡先・返金条件等を準備。</div>
+          </div>
+          <div class="legal-row">
+            <span class="legal-law">APPI</span>
+            <div class="legal-desc">Phase 1 に5要件を組み込む：委託先公表 / 越境移転同意 / 漏えい報告フロー（速報3–5日）/ 開示・退会窓口 / 個人関連情報の明示。<span class="legal-note">個人情報保護法 2024年施行規則改正対応済</span></div>
+          </div>
+          <div class="legal-row">
+            <span class="legal-law">景表法</span>
+            <div class="legal-desc">5スタンプ→キーホルダー（250円）は取引価額2,500円の10%。10スタンプ→500円ドリンク無料は取引価額3,850円の13%。いずれも20%上限内でセーフ。<span class="legal-note">AN見解: 適法性リスクは低い。milk tea 側判断で弁護士確認も可能</span></div>
+          </div>
+          <div class="legal-row">
+            <span class="legal-law">30日告知</span>
+            <div class="legal-desc">不利益変更（チャージ単位引上げ・失効短縮・上限引下げ・機能恒久停止）は30日前にアプリ内通知で告知。緊急停止は即時変更＋事後告知許容。</div>
+          </div>
+          <div class="legal-row">
+            <span class="legal-law">資金決済法</span>
+            <div class="legal-desc">未使用残高が基準日に1,000万円を超えた場合、milk tea が関東財務局へ届出。管理画面で常時確認、800–900万円到達で自動アラート。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 PHASE 1.5 / 2 -->
+    <div class="slide" role="region" aria-label="将来展望">
+      <div class="s13-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">06 — Future Phases</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">Phase 1.5 / Phase 2 の展望</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">13</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+        <div class="phase-split">
+          <div class="phase-panel">
+            <p class="phase-label">Phase 1.5</p>
+            <h3 class="phase-title">ギフト機能と<br>通知の整備</h3>
+            <p class="phase-timing">Phase 1 ローンチ 2–3ヶ月後の想定</p>
+            <ul class="phase-features">
+              <li>残高シェア — 友達に「今度のお茶代」で残高を送れる</li>
+              <li>デジタルギフト — LINEなどでドリンクチケットを贈れる</li>
+              <li>紙ギフトカード — 店頭で配れる物理カード（バーコード印字）</li>
+              <li>カード再発行 — 本人確認のうえで紛失時に対応</li>
+              <li>プッシュ通知（失効前お知らせ）</li>
+              <li>通知の「重要」「広告」分離 + 配信停止機能</li>
+            </ul>
+          </div>
+          <div class="phase-panel">
+            <p class="phase-label">Phase 2</p>
+            <h3 class="phase-title">加盟店展開 /<br>SaaS 化</h3>
+            <p class="phase-timing">Phase 1 ローンチ 1年以降の展望</p>
+            <ul class="phase-features">
+              <li>Tamary を milk tea 以外の他事業者にも展開</li>
+              <li>各加盟店が自分の Square アカウントで参加</li>
+              <li>milk tea が Tamary の事業主体として加盟店と契約・運営を主導</li>
+              <li>サブライセンス権は milk tea が保有（Phase 1 から譲渡済）</li>
+              <li>AN は外注エンジニアとして技術協力を継続</li>
+              <li>Tamary 自体の SaaS 商用化が視野に入る段階</li>
+            </ul>
+            <div class="phase-cost"><span class="phase-cost-label">Model</span><span style="font-family:var(--f-sans);font-size:0.62em;font-weight:400;letter-spacing:0;color:var(--ink-mid)">加盟店別 個別見積</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14 ESTIMATE -->
+    <div class="slide" role="region" aria-label="見積とスケジュール">
+      <div class="s14-inner">
+        <div class="s14-left">
+          <div>
+            <span class="index-tag">07 — Estimate</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">見積 &amp;<br>スケジュール</h2>
+          </div>
+          <div>
+            <div style="margin-bottom:6px"><span class="price-label">Development Cost</span></div>
+            <p class="price-main">20–25<span style="font-size:0.36em;font-weight:700;letter-spacing:0;color:var(--ink-mid)"> 万円</span></p>
+            <p class="price-sub">税別・一括・固定価格<br>141–214h、追加請求なし（Phase 1 スコープ内）</p>
+            <div style="height:14px"></div>
+            <div class="market-compare">
+              <div class="market-item"><span class="market-label">通常相場（中規模開発会社）</span><span class="market-val">1,000–2,500万円</span></div>
+              <div class="market-item"><span class="market-label">今回</span><span class="market-val market-val--highlight">20–25万円</span></div>
+            </div>
+          </div>
+          <div class="folio">14 / 16</div>
+        </div>
+        <div class="s14-right">
+          <span class="index-tag">Two-Stage Schedule</span>
+          <div style="height:8px"></div>
+          <div class="schedule-row">
+            <span class="schedule-phase-tag">Stage 1</span>
+            <div><span class="schedule-duration">約1ヶ月</span><span class="schedule-desc">実装完了（主業並行・平日2–3h/日）<br>集中稼働なら2–3週間</span></div>
+          </div>
+          <div class="schedule-row">
+            <span class="schedule-phase-tag">Stage 2</span>
+            <div><span class="schedule-duration">+ 2–3週</span><span class="schedule-desc">ベータ完了（milk tea 1店舗での先行運用）<br>問題なければ全3店舗へ展開</span></div>
+          </div>
+          <div style="height:10px"></div>
+          <div class="schedule-row" style="padding:9px 0">
+            <span class="schedule-phase-tag" style="font-size:8px;min-width:60px">Week 1</span>
+            <span class="schedule-desc">Square Sandbox 準備・API設計・DB設計</span>
+          </div>
+          <div class="schedule-row" style="padding:9px 0">
+            <span class="schedule-phase-tag" style="font-size:8px;min-width:60px">Week 2</span>
+            <span class="schedule-desc">UI生成・コア機能（スタンプ・残高・会員識別）</span>
+          </div>
+          <div class="schedule-row" style="padding:9px 0">
+            <span class="schedule-phase-tag" style="font-size:8px;min-width:60px">Week 3</span>
+            <span class="schedule-desc">補填機能・統合・内部テスト</span>
+          </div>
+          <div class="schedule-row" style="padding:9px 0;border-bottom:none">
+            <span class="schedule-phase-tag" style="font-size:8px;min-width:60px">Week 4</span>
+            <span class="schedule-desc">milk tea 店舗での運用テスト・本番切替</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15 IP -->
+    <div class="slide" role="region" aria-label="知財帰属と契約形態">
+      <div class="s15-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">07 — IP &amp; Agreement</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">知財帰属と<br>契約形態</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">15</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+        <div class="ip-grid">
+          <div class="ip-col">
+            <p class="ip-col-head">milk tea に全面譲渡</p>
+            <p class="ip-owner">milk tea<br>所有</p>
+            <ul class="ip-items">
+              <li>Tamary の全ソースコード</li>
+              <li>設計ドキュメント・仕様書一式</li>
+              <li>「Tamary」商標（milk tea が出願・所有）</li>
+              <li>Phase 2 以降の他加盟店へのサブライセンス権</li>
+              <li>将来の展開・売却の判断権</li>
+            </ul>
+            <p class="ip-note">J-PlatPat 商標調査済（2026-04-23）。同一区分ヒットなし・クリア。</p>
+          </div>
+          <div class="ip-col">
+            <p class="ip-col-head">AN が保持するもの</p>
+            <p class="ip-owner">AN<br>（外注エンジニア）</p>
+            <ul class="ip-items">
+              <li>ポートフォリオ掲載権のみ</li>
+              <li>スクリーンショット・技術スタック・課題解決概要の公開</li>
+            </ul>
+            <p class="ip-note">公開 NG: OAuth credential・機密情報・milk tea の事業数値</p>
+          </div>
+          <div class="ip-col">
+            <p class="ip-col-head">契約形態</p>
+            <p class="ip-owner">軽量合意書<br>A4 1枚</p>
+            <ul class="ip-items">
+              <li>フリーランス保護法 8項目準拠</li>
+              <li>発注日・委託内容・納期・納品方法</li>
+              <li>検収期限・当事者表示・報酬額・支払期日</li>
+              <li>保守: 納品後30日 無償バグ修正</li>
+              <li>31日目以降: 時間チャージ 2,500円/時</li>
+            </ul>
+            <p class="ip-note">請求書とは別管理。発注メールテンプレも用意あり。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16 CLOSING -->
+    <div class="slide s16" role="region" aria-label="次のステップ">
+      <div class="s16-inner">
+        <div class="s16-top">
+          <span class="s16-brand">Tamary — milk tea カードアプリ</span>
+          <span class="folio" style="color:rgba(184,152,90,0.5)">16 / 16</span>
+        </div>
+        <div class="s16-middle">
+          <div class="s16-main-message">
+            <h2 class="s16-headline">milk tea の<br>次の一手を<br>一緒に作りましょう</h2>
+            <p class="s16-sub">20–25万円・約1ヶ月・全ての資産は milk tea のもの。低リスクで高品質な自社アプリを、この規模で実現できます。</p>
+          </div>
+          <div>
+            <p class="folio" style="color:var(--gold);margin-bottom:12px">Next Steps — milk tea にお願いする確認事項</p>
+            <ul class="nextstep-list">
+              <li class="nextstep-item">
+                <span class="nextstep-num">01</span>
+                <div><p class="nextstep-title">特商法表記の情報準備</p><p class="nextstep-desc">事業者名・代表者名・所在地・連絡先・返金条件を確定</p></div>
+              </li>
+              <li class="nextstep-item">
+                <span class="nextstep-num">02</span>
+                <div><p class="nextstep-title">消費者向け規約・プライバシーポリシーの整備</p><p class="nextstep-desc">AIドラフト → AI契約書レビュー → 弁護士最終レビューの推奨フロー</p></div>
+              </li>
+              <li class="nextstep-item">
+                <span class="nextstep-num">03</span>
+                <div><p class="nextstep-title">軽量合意書への署名</p><p class="nextstep-desc">A4 1枚・フリーランス保護法8項目準拠の合意書を確認・締結</p></div>
+              </li>
+              <li class="nextstep-item">
+                <span class="nextstep-num">04</span>
+                <div><p class="nextstep-title">商標出願（任意・milk tea 主導）</p><p class="nextstep-desc">J-PlatPat 調査クリア済（2026-04-23）。出願の時期は milk tea 決裁</p></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="s16-bottom">
+          <p class="s16-contract-note">ご質問・ご確認事項は AN までお気軽にお問い合わせください。<br>有効期限: 発行後30日 / 仕様書 v9.1.3 / 2026-04-26</p>
+          <div>
+            <p class="s16-price-label">Fixed Price</p>
+            <p class="s16-price-val">20–25万円</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides-track -->
+</div><!-- /slides-viewport -->
+
+<!-- NAV BAR -->
+<nav class="nav-bar" aria-label="スライドナビゲーション">
+  <button class="nav-btn" id="btnPrev" aria-label="前のスライド" disabled>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="nav-dots" id="navDots" role="tablist" aria-label="スライド一覧"></div>
+  <button class="nav-btn" id="btnNext" aria-label="次のスライド">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <span class="nav-folio" id="navFolio" aria-live="polite">01 / 16</span>
+</nav>
+
+<script>
+(function() {
+  'use strict';
+  var TOTAL = 16;
+  var current = 0;
+  var isAnimating = false;
+  var track    = document.getElementById('track');
+  var btnPrev  = document.getElementById('btnPrev');
+  var btnNext  = document.getElementById('btnNext');
+  var dotsWrap = document.getElementById('navDots');
+  var folio    = document.getElementById('navFolio');
+
+  var dots = [];
+  for (var i = 0; i < TOTAL; i++) {
+    (function(idx) {
+      var d = document.createElement('button');
+      d.className = 'nav-dot' + (idx === 0 ? ' active' : '');
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+      d.setAttribute('aria-label', 'スライド ' + (idx + 1));
+      d.addEventListener('click', function() { goTo(idx); });
+      dotsWrap.appendChild(d);
+      dots.push(d);
+    })(i);
+  }
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  function update() {
+    track.style.transform = 'translateX(-' + (current * 100) + 'vw)';
+    for (var i = 0; i < dots.length; i++) {
+      var active = i === current;
+      dots[i].className = 'nav-dot' + (active ? ' active' : '');
+      dots[i].setAttribute('aria-selected', active ? 'true' : 'false');
+    }
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === TOTAL - 1;
+    folio.textContent = pad(current + 1) + ' / ' + pad(TOTAL);
+  }
+
+  function goTo(idx) {
+    if (isAnimating) return;
+    var next = Math.max(0, Math.min(TOTAL - 1, idx));
+    if (next === current) return;
+    isAnimating = true;
+    current = next;
+    update();
+    setTimeout(function() { isAnimating = false; }, 730);
+  }
+
+  btnPrev.addEventListener('click', function() { goTo(current - 1); });
+  btnNext.addEventListener('click', function() { goTo(current + 1); });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End')  { e.preventDefault(); goTo(TOTAL - 1); }
+  });
+
+  var touchStartX = 0;
+  var touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      goTo(dx < 0 ? current + 1 : current - 1);
+    }
+  }, { passive: true });
+
+  update();
+})();
+</script>
+</body>
+</html>
