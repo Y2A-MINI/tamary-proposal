@@ -306,7 +306,197 @@ html, body {
 .kpi-sub { font-family: var(--f-sans); font-size: 11px; font-weight: 400; color: var(--ink-mid); line-height: 18px; }
 
 /* ============================================================
-   SLIDE 05 — STAMP
+   SLIDE A — FIRST-TIME USER FLOW (NEW)
+   ============================================================ */
+.sA-inner {
+  padding: clamp(36px,4.5vw,64px) clamp(36px,5.5vw,80px);
+  display: flex; flex-direction: column; height: 100%;
+}
+
+.phone-flow-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: clamp(10px,1.6vw,20px);
+}
+
+.phone-unit {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  flex: 0 0 auto;
+}
+
+.phone-frame {
+  width: clamp(104px,11vw,148px);
+  height: clamp(186px,20vw,266px);
+  border: 1px solid var(--ink-light);
+  background: var(--white);
+  display: flex; flex-direction: column;
+  overflow: hidden; position: relative;
+}
+
+.phone-statusbar {
+  height: 10px; background: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.phone-statusbar-dot {
+  width: 20px; height: 3px; background: rgba(253,252,250,0.25); border-radius: 2px;
+}
+
+.phone-screen {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 8px 8px 6px;
+  gap: 6px;
+}
+
+/* Step 1 — Welcome */
+.welcome-logo {
+  font-family: var(--f-latin); font-weight: 900;
+  font-size: clamp(16px,2vw,28px); line-height: 1;
+  color: var(--ink); letter-spacing: -0.03em;
+  text-align: center; margin: auto 0 2px;
+}
+.welcome-sub {
+  font-family: var(--f-sans); font-size: 8px; font-weight: 400;
+  color: var(--ink-light); text-align: center; line-height: 13px;
+}
+.welcome-cta {
+  display: block; border: 1px solid var(--ink); padding: 5px 0;
+  font-family: var(--f-latin); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-align: center; color: var(--ink);
+  margin: 4px 0 2px;
+}
+.welcome-login {
+  font-family: var(--f-latin); font-size: 7px; font-weight: 400;
+  color: var(--ink-light); text-align: center; letter-spacing: 0.08em;
+  text-decoration: underline;
+}
+
+/* Step 2 — Register */
+.register-head {
+  font-family: var(--f-sans); font-size: 9px; font-weight: 700;
+  color: var(--ink); line-height: 13px; text-align: center; margin-bottom: 4px;
+}
+.register-btn {
+  display: block; border: 1px solid var(--rule); padding: 5px 6px;
+  font-family: var(--f-sans); font-size: 8px; font-weight: 400;
+  color: var(--ink-mid); line-height: 12px;
+}
+.register-btn + .register-btn { margin-top: 3px; }
+.register-note {
+  font-family: var(--f-sans); font-size: 6px; font-weight: 400;
+  color: var(--ink-light); line-height: 9px; margin-top: 5px;
+}
+
+/* Step 3 — Tutorial */
+.tutorial-dots { display: flex; gap: 4px; justify-content: center; }
+.tutorial-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--rule); border: 1px solid var(--rule);
+}
+.tutorial-dot.active { background: var(--gold); border-color: var(--gold); }
+.tutorial-copy {
+  font-family: var(--f-sans); font-size: 8px; font-weight: 400;
+  color: var(--ink-mid); line-height: 13px; text-align: center;
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+.tutorial-next {
+  display: block; background: var(--ink); padding: 5px 0;
+  font-family: var(--f-latin); font-size: 8px; font-weight: 700;
+  letter-spacing: 0.1em; text-align: center; color: var(--white);
+}
+.tutorial-skip {
+  font-family: var(--f-latin); font-size: 7px; font-weight: 400;
+  color: var(--ink-light); text-align: center; letter-spacing: 0.08em;
+}
+
+/* Step 4 — Home QR */
+.home-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--rule); padding-bottom: 4px; margin-bottom: 4px;
+}
+.home-card-label {
+  font-family: var(--f-latin); font-size: 7px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
+}
+.home-stamp {
+  font-family: var(--f-sans); font-size: 7px; font-weight: 400;
+  color: var(--ink-mid); line-height: 11px;
+}
+.home-qr {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: repeat(5,1fr);
+  gap: 1px;
+  margin: 2px 4px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.home-qr-cell {
+  background: var(--paper);
+}
+.home-qr-cell.dark { background: var(--ink); }
+.home-balance {
+  display: flex; justify-content: space-between;
+  padding-top: 4px; border-top: 1px solid var(--rule);
+}
+.home-balance-item { display: flex; flex-direction: column; gap: 1px; }
+.home-balance-label {
+  font-family: var(--f-latin); font-size: 6px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light);
+}
+.home-balance-val {
+  font-family: var(--f-latin); font-size: 9px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.home-tabs {
+  display: flex; border-top: 1px solid var(--rule);
+  margin: 3px -8px -6px;
+}
+.home-tab {
+  flex: 1; text-align: center;
+  font-family: var(--f-latin); font-size: 5px; font-weight: 600;
+  letter-spacing: 0.06em; color: var(--ink-light);
+  padding: 3px 0; border-right: 1px solid var(--rule);
+}
+.home-tab:last-child { border-right: none; }
+.home-tab.active { color: var(--gold); }
+
+/* Flow arrows */
+.flow-arrow {
+  flex: 0 0 auto;
+  width: clamp(20px,3vw,40px);
+  text-align: center;
+  font-family: var(--f-latin); font-size: clamp(10px,1.4vw,18px);
+  color: var(--gold); font-weight: 700; align-self: center;
+  padding-bottom: 28px;
+}
+
+/* Phone captions */
+.phone-caption { text-align: center; }
+.phone-step-num {
+  font-family: var(--f-latin); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.2em; color: var(--gold); display: block;
+}
+.phone-step-label {
+  font-family: var(--f-sans); font-size: 10px; font-weight: 400;
+  color: var(--ink-mid); line-height: 16px; display: block;
+  margin-top: 2px;
+}
+
+.flow-footer {
+  display: flex; justify-content: flex-end;
+  margin-top: 8px;
+}
+.flow-footer-note {
+  font-family: var(--f-latin); font-size: 8px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light);
+}
+
+/* ============================================================
+   SLIDE 06 — STAMP (was 05)
    ============================================================ */
 .s05-inner {
   padding: clamp(40px,5vw,72px) clamp(40px,6vw,88px);
@@ -504,6 +694,179 @@ html, body {
 .ops-desc { font-family: var(--f-sans); font-size: 12px; font-weight: 400; line-height: 20px; color: var(--ink-mid); flex: 1; }
 
 /* ============================================================
+   SLIDE B — OPERATIONS DASHBOARD (NEW)
+   ============================================================ */
+.sB-inner {
+  padding: clamp(36px,4.5vw,64px) clamp(36px,5.5vw,80px);
+  display: flex; flex-direction: column; height: 100%;
+}
+
+.browser-frame {
+  flex: 1;
+  border: 1px solid var(--ink-light);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  margin-top: clamp(10px,1.6vw,18px);
+}
+
+.browser-chrome {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+
+.browser-dots { display: flex; gap: 5px; }
+.browser-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  border: 1px solid var(--rule);
+}
+
+.browser-urlbar {
+  flex: 1; border: 1px solid var(--rule);
+  padding: 3px 10px;
+  font-family: var(--f-latin); font-size: 9px; font-weight: 400;
+  letter-spacing: 0.06em; color: var(--ink-light);
+  background: var(--white);
+}
+
+.browser-body {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* Dashboard nav */
+.dash-nav {
+  display: flex; align-items: center;
+  border-bottom: 1px solid var(--rule);
+  padding: 0 16px;
+  gap: 0; flex-shrink: 0;
+  background: var(--ink);
+}
+.dash-nav-logo {
+  font-family: var(--f-latin); font-size: 10px; font-weight: 900;
+  letter-spacing: -0.02em; color: var(--gold);
+  padding: 8px 14px 8px 0;
+  border-right: 1px solid rgba(184,152,90,0.2); margin-right: 2px;
+}
+.dash-nav-item {
+  font-family: var(--f-sans); font-size: 9px; font-weight: 400;
+  color: rgba(253,252,250,0.45); padding: 8px 10px; cursor: pointer;
+}
+.dash-nav-item.active {
+  color: var(--white); font-weight: 700;
+  border-bottom: 1.5px solid var(--gold);
+}
+.dash-nav-tenant {
+  margin-left: auto;
+  font-family: var(--f-latin); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.1em; color: var(--gold);
+  padding: 8px 0;
+}
+
+/* Dashboard content */
+.dash-content {
+  flex: 1; padding: 12px 16px; display: flex; flex-direction: column;
+  gap: 10px; overflow: hidden;
+}
+
+/* KPI row */
+.dash-kpi-row {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; flex-shrink: 0;
+}
+.dash-kpi-card {
+  border: 1px solid var(--rule); padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.dash-kpi-label {
+  font-family: var(--f-latin); font-size: 7px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-light);
+}
+.dash-kpi-value {
+  font-family: var(--f-latin); font-weight: 900;
+  font-size: clamp(14px,1.8vw,24px); line-height: 1;
+  color: var(--ink); letter-spacing: -0.03em;
+}
+.dash-kpi-sub {
+  font-family: var(--f-sans); font-size: 8px; font-weight: 400;
+  color: var(--gold); line-height: 11px;
+}
+
+/* Alert row */
+.dash-alert {
+  border-left: 2px solid var(--gold);
+  padding: 6px 10px; flex-shrink: 0;
+  background: rgba(184,152,90,0.05);
+  display: flex; flex-direction: column; gap: 3px;
+}
+.dash-alert-line {
+  font-family: var(--f-sans); font-size: 9px; font-weight: 400;
+  color: var(--ink-mid); line-height: 14px;
+}
+.dash-alert-mark {
+  font-family: var(--f-latin); font-size: 8px; font-weight: 700;
+  color: var(--gold); margin-right: 4px;
+}
+
+/* Main lower row */
+.dash-lower {
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; min-height: 0;
+}
+.dash-panel {
+  border: 1px solid var(--rule); padding: 8px 10px;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.dash-panel-head {
+  font-family: var(--f-latin); font-size: 7px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
+  padding-bottom: 5px; border-bottom: 1px solid var(--rule); margin-bottom: 5px;
+  flex-shrink: 0;
+}
+.dash-tx-row {
+  display: grid; grid-template-columns: 1fr 60px 50px; gap: 4px;
+  padding: 4px 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+}
+.dash-tx-row:last-child { border-bottom: none; }
+.dash-tx-name { font-family: var(--f-sans); font-size: 8px; color: var(--ink-mid); line-height: 12px; }
+.dash-tx-type { font-family: var(--f-latin); font-size: 7px; color: var(--ink-light); text-align: center; }
+.dash-tx-amount { font-family: var(--f-latin); font-size: 8px; font-weight: 700; color: var(--ink); text-align: right; }
+
+/* Role diagram */
+.dash-roles {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5px; flex: 1;
+}
+.dash-role-item {
+  border: 1px solid var(--rule); padding: 5px 7px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.dash-role-name {
+  font-family: var(--f-latin); font-size: 7px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink);
+}
+.dash-role-desc {
+  font-family: var(--f-sans); font-size: 7px; font-weight: 400;
+  color: var(--ink-light); line-height: 10px;
+}
+.dash-role-item.role-owner { border-color: var(--gold); }
+.dash-role-item.role-owner .dash-role-name { color: var(--gold); }
+
+/* Dashboard footer caption */
+.dash-footer {
+  display: flex; justify-content: flex-end;
+  margin-top: 8px; flex-shrink: 0;
+}
+.dash-footer-note {
+  font-family: var(--f-latin); font-size: 7px; font-weight: 500;
+  letter-spacing: 0.08em; color: var(--ink-light); text-align: right;
+  line-height: 11px;
+}
+
+/* Responsive: hide dashboard right panel on mobile */
+@media (max-width: 680px) {
+  .dash-kpi-row { grid-template-columns: repeat(2,1fr); }
+  .dash-lower { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
    SLIDE 12 — LEGAL
    ============================================================ */
 .s12-inner { display: grid; grid-template-columns: 42% 58%; height: 100%; }
@@ -694,10 +1057,12 @@ html, body {
             <div class="s01-index-item"><span class="s01-index-num">01</span>課題と解決</div>
             <div class="s01-index-item"><span class="s01-index-num">02</span>Tamary とは</div>
             <div class="s01-index-item"><span class="s01-index-num">03</span>3行サマリ・KPI</div>
-            <div class="s01-index-item"><span class="s01-index-num">04–08</span>Phase 1 全機能</div>
-            <div class="s01-index-item"><span class="s01-index-num">09–12</span>データ・技術・法務</div>
-            <div class="s01-index-item"><span class="s01-index-num">13–15</span>見積・知財・契約</div>
-            <div class="s01-index-item"><span class="s01-index-num">16</span>次のステップ</div>
+            <div class="s01-index-item"><span class="s01-index-num">04</span>お客さんの初回体験</div>
+            <div class="s01-index-item"><span class="s01-index-num">05–09</span>Phase 1 全機能</div>
+            <div class="s01-index-item"><span class="s01-index-num">10–13</span>データ・技術・法務</div>
+            <div class="s01-index-item"><span class="s01-index-num">13</span>milk tea向け管理画面</div>
+            <div class="s01-index-item"><span class="s01-index-num">14–17</span>法務・見積・知財・契約</div>
+            <div class="s01-index-item"><span class="s01-index-num">18</span>次のステップ</div>
           </div>
         </div>
         <div class="s01-vrule" aria-hidden="true"></div>
@@ -727,7 +1092,7 @@ html, body {
               <p class="challenge-a">→ アプリと会員データが milk tea の資産になる</p>
             </div>
           </div>
-          <div class="folio">02 / 16</div>
+          <div class="folio">02 / 18</div>
         </div>
         <div class="s02-right">
           <span class="index-tag" style="color:var(--ink-light)">Solution</span>
@@ -791,7 +1156,7 @@ html, body {
               <div class="s04-tagline-line">完成したものは milk tea の所有物になります</div>
             </div>
           </div>
-          <div class="folio" style="color:rgba(253,252,250,0.3)">04 / 16</div>
+          <div class="folio" style="color:rgba(253,252,250,0.3)">04 / 18</div>
         </div>
         <div class="s04-right">
           <div class="kpi-block">
@@ -818,16 +1183,151 @@ html, body {
       </div>
     </div>
 
-    <!-- 05 STAMP -->
+    <!-- 05 FIRST-TIME USER FLOW (NEW) -->
+    <div class="slide" role="region" aria-label="お客さんの初回体験">
+      <div class="sA-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">04 — First-time User Flow</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">お客さんの初回体験</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">05</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+
+        <div class="phone-flow-wrap">
+
+          <!-- Step 1: Welcome -->
+          <div class="phone-unit">
+            <div class="phone-frame">
+              <div class="phone-statusbar"><div class="phone-statusbar-dot"></div></div>
+              <div class="phone-screen" style="justify-content:space-between">
+                <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+                  <p class="welcome-logo">Tamary</p>
+                  <p class="welcome-sub">milk teaのスマホカード</p>
+                </div>
+                <div>
+                  <span class="welcome-cta">はじめる</span>
+                  <p class="welcome-login" style="margin-top:5px">ログイン</p>
+                </div>
+              </div>
+            </div>
+            <div class="phone-caption">
+              <span class="phone-step-num">01</span>
+              <span class="phone-step-label">ウェルカム</span>
+            </div>
+          </div>
+
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <!-- Step 2: Register -->
+          <div class="phone-unit">
+            <div class="phone-frame">
+              <div class="phone-statusbar"><div class="phone-statusbar-dot"></div></div>
+              <div class="phone-screen" style="justify-content:flex-start">
+                <p class="register-head">アカウントを作成</p>
+                <div style="height:4px"></div>
+                <span class="register-btn">Apple で続ける</span>
+                <span class="register-btn" style="margin-top:3px">Google で続ける</span>
+                <span class="register-btn" style="margin-top:3px">メールアドレスで登録</span>
+                <p class="register-note" style="margin-top:6px">登録すると利用規約・プライバシーポリシーに同意したことになります</p>
+              </div>
+            </div>
+            <div class="phone-caption">
+              <span class="phone-step-num">02</span>
+              <span class="phone-step-label">登録選択</span>
+            </div>
+          </div>
+
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <!-- Step 3: Tutorial -->
+          <div class="phone-unit">
+            <div class="phone-frame">
+              <div class="phone-statusbar"><div class="phone-statusbar-dot"></div></div>
+              <div class="phone-screen" style="justify-content:space-between">
+                <div class="tutorial-dots">
+                  <div class="tutorial-dot"></div>
+                  <div class="tutorial-dot active"></div>
+                  <div class="tutorial-dot"></div>
+                </div>
+                <p class="tutorial-copy">お会計時にQRコードを店員さんに見せてください</p>
+                <div>
+                  <span class="tutorial-next">次へ</span>
+                  <p class="tutorial-skip" style="margin-top:5px;text-align:center">スキップ</p>
+                </div>
+              </div>
+            </div>
+            <div class="phone-caption">
+              <span class="phone-step-num">03</span>
+              <span class="phone-step-label">チュートリアル</span>
+            </div>
+          </div>
+
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <!-- Step 4: Home QR -->
+          <div class="phone-unit">
+            <div class="phone-frame">
+              <div class="phone-statusbar"><div class="phone-statusbar-dot"></div></div>
+              <div class="phone-screen" style="justify-content:space-between">
+                <div class="home-header">
+                  <span class="home-card-label">milk tea Card</span>
+                  <span class="home-stamp">スタンプ 3 / 5</span>
+                </div>
+                <div class="home-qr">
+                  <div class="home-qr-cell dark"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell dark"></div>
+                  <div class="home-qr-cell dark"></div><div class="home-qr-cell"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell"></div><div class="home-qr-cell dark"></div>
+                  <div class="home-qr-cell"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell"></div>
+                  <div class="home-qr-cell dark"></div><div class="home-qr-cell"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell"></div><div class="home-qr-cell dark"></div>
+                  <div class="home-qr-cell dark"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell"></div><div class="home-qr-cell dark"></div><div class="home-qr-cell dark"></div>
+                </div>
+                <div class="home-balance">
+                  <div class="home-balance-item">
+                    <span class="home-balance-label">残高</span>
+                    <span class="home-balance-val">¥1,200</span>
+                  </div>
+                  <div class="home-balance-item" style="text-align:right">
+                    <span class="home-balance-label">引換券</span>
+                    <span class="home-balance-val">0 / 5</span>
+                  </div>
+                </div>
+                <div class="home-tabs">
+                  <div class="home-tab active">ホーム</div>
+                  <div class="home-tab">スタンプ</div>
+                  <div class="home-tab">残高</div>
+                  <div class="home-tab">券</div>
+                  <div class="home-tab">人</div>
+                </div>
+              </div>
+            </div>
+            <div class="phone-caption">
+              <span class="phone-step-num">04</span>
+              <span class="phone-step-label">ホーム (QR)</span>
+            </div>
+          </div>
+
+        </div><!-- /phone-flow-wrap -->
+
+        <div class="flow-footer">
+          <span class="flow-footer-note">所要時間: Apple / Google SSO で約 30 秒</span>
+        </div>
+
+        <div style="margin-top:6px" class="folio">05 / 18</div>
+      </div>
+    </div>
+
+    <!-- 06 STAMP (was 05) -->
     <div class="slide" role="region" aria-label="スタンプカード機能">
       <div class="s05-inner">
         <div class="slide-header">
           <div>
-            <span class="index-tag">04 — Phase 1 Functions</span>
+            <span class="index-tag">05 — Phase 1 Functions</span>
             <div style="height:10px"></div>
             <h2 class="slide-title">スタンプカード</h2>
           </div>
-          <span class="slide-num-right" aria-hidden="true">05</span>
+          <span class="slide-num-right" aria-hidden="true">06</span>
         </div>
         <div class="rule-h feature-rule"></div>
         <div class="feature-grid">
@@ -859,12 +1359,12 @@ html, body {
       </div>
     </div>
 
-    <!-- 06 CHARGE -->
+    <!-- 07 CHARGE (was 06) -->
     <div class="slide" role="region" aria-label="チャージ式残高">
       <div class="s06-inner">
         <div class="s06-left">
           <div>
-            <span class="index-tag">04 — Phase 1 Functions</span>
+            <span class="index-tag">05 — Phase 1 Functions</span>
             <div style="height:10px"></div>
             <h2 class="slide-title">チャージ式残高</h2>
             <div style="height:18px"></div>
@@ -886,7 +1386,7 @@ html, body {
             <div class="charge-spec-row"><span class="charge-spec-key">支払い方法</span><span class="charge-spec-val">Square 対応決済</span></div>
             <div class="charge-spec-row"><span class="charge-spec-key">残高で支払い</span><span class="charge-spec-val">スタンプ付与あり</span></div>
           </div>
-          <div class="folio">06 / 16</div>
+          <div class="folio">07 / 18</div>
         </div>
         <div class="s06-right">
           <span class="s06-right-label">Prepaid Balance</span>
@@ -898,16 +1398,16 @@ html, body {
       </div>
     </div>
 
-    <!-- 07 EXPIRY -->
+    <!-- 08 EXPIRY (was 07) -->
     <div class="slide" role="region" aria-label="有効期限と通知">
       <div class="s07-inner">
         <div class="slide-header">
           <div>
-            <span class="index-tag">04 — Phase 1 Functions</span>
+            <span class="index-tag">05 — Phase 1 Functions</span>
             <div style="height:10px"></div>
             <h2 class="slide-title">有効期限と失効前通知</h2>
           </div>
-          <span class="slide-num-right" aria-hidden="true">07</span>
+          <span class="slide-num-right" aria-hidden="true">08</span>
         </div>
         <div class="rule-h feature-rule"></div>
         <div class="expiry-grid">
@@ -949,12 +1449,12 @@ html, body {
       </div>
     </div>
 
-    <!-- 08 37 FEATURES -->
+    <!-- 09 37 FEATURES (was 08) -->
     <div class="slide" role="region" aria-label="37機能サマリ">
       <div class="s08-inner">
         <div class="s08-left">
           <div>
-            <span class="index-tag">04 — Phase 1 Scope</span>
+            <span class="index-tag">05 — Phase 1 Scope</span>
             <div style="height:12px"></div>
             <h2 class="headline-serif" style="font-size:clamp(26px,3.2vw,44px);line-height:1.15">Phase 1<br><span style="font-family:var(--f-latin);font-weight:900;font-size:clamp(40px,5vw,68px);line-height:0.9;letter-spacing:-0.04em">37</span><br><span style="font-family:var(--f-sans);font-size:0.42em;font-weight:400;letter-spacing:0;vertical-align:super;color:var(--ink-mid)"> 機能</span></h2>
             <div style="height:14px"></div>
@@ -1025,16 +1525,16 @@ html, body {
       </div>
     </div>
 
-    <!-- 09 DATA-LIGHT -->
+    <!-- 10 DATA-LIGHT (was 09) -->
     <div class="slide" role="region" aria-label="データの扱い">
       <div class="s09-inner">
         <div class="slide-header">
           <div>
-            <span class="index-tag">05 — Data Design</span>
+            <span class="index-tag">06 — Data Design</span>
             <div style="height:10px"></div>
             <h2 class="slide-title">Tamary は何を持ち、<br>何を持たないか</h2>
           </div>
-          <span class="slide-num-right" aria-hidden="true">09</span>
+          <span class="slide-num-right" aria-hidden="true">10</span>
         </div>
         <div class="rule-h feature-rule"></div>
         <div class="data-split">
@@ -1059,7 +1559,7 @@ html, body {
       </div>
     </div>
 
-    <!-- 10 TECH STACK -->
+    <!-- 11 TECH STACK (was 10) -->
     <div class="slide" role="region" aria-label="技術基盤">
       <div class="s10-inner">
         <div class="s10-left">
@@ -1074,7 +1574,7 @@ html, body {
             <div class="rule-h" style="margin-bottom:12px"></div>
             <p class="caption">ホスティング第一候補:<br>Cloudflare Workers + OpenNext<br>（世界中の主要都市にサーバーがある高速配信 + DDoS・WAF 標準装備）<br><br>フォールバック: Vercel<br>ドメイン: tamary.app（年1,500円程度、milk tea 名義）</p>
           </div>
-          <div class="folio">10 / 16</div>
+          <div class="folio">11 / 18</div>
         </div>
         <div class="s10-right">
           <div class="tech-stack-item">
@@ -1101,16 +1601,16 @@ html, body {
       </div>
     </div>
 
-    <!-- 11 OPERATIONS -->
+    <!-- 12 OPERATIONS (was 11) -->
     <div class="slide" role="region" aria-label="運用面の柔軟性">
       <div class="s11-inner">
         <div class="slide-header">
           <div>
-            <span class="index-tag">05 — Operations</span>
+            <span class="index-tag">06 — Operations</span>
             <div style="height:10px"></div>
             <h2 class="slide-title">本番運用リスクを下げる<br>4つの仕組み</h2>
           </div>
-          <span class="slide-num-right" aria-hidden="true">11</span>
+          <span class="slide-num-right" aria-hidden="true">12</span>
         </div>
         <div class="rule-h feature-rule"></div>
         <div class="ops-grid">
@@ -1138,7 +1638,146 @@ html, body {
       </div>
     </div>
 
-    <!-- 12 LEGAL -->
+    <!-- 13 DASHBOARD (NEW) -->
+    <div class="slide" role="region" aria-label="milk tea向け管理画面">
+      <div class="sB-inner">
+        <div class="slide-header">
+          <div>
+            <span class="index-tag">06 — Operations Dashboard</span>
+            <div style="height:10px"></div>
+            <h2 class="slide-title">milk tea向け管理画面</h2>
+          </div>
+          <span class="slide-num-right" aria-hidden="true">13</span>
+        </div>
+        <div class="rule-h feature-rule"></div>
+
+        <div class="browser-frame">
+          <!-- Browser chrome -->
+          <div class="browser-chrome">
+            <div class="browser-dots">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-urlbar">tamary.app/admin</div>
+          </div>
+
+          <!-- Browser body -->
+          <div class="browser-body">
+            <!-- Nav bar -->
+            <div class="dash-nav">
+              <span class="dash-nav-logo">Tamary</span>
+              <span class="dash-nav-item active">ダッシュボード</span>
+              <span class="dash-nav-item">会員</span>
+              <span class="dash-nav-item">スタンプ</span>
+              <span class="dash-nav-item">残高</span>
+              <span class="dash-nav-item">ギフトカード</span>
+              <span class="dash-nav-item">設定</span>
+              <span class="dash-nav-tenant">milk tea</span>
+            </div>
+
+            <!-- Content -->
+            <div class="dash-content">
+
+              <!-- Row 1: KPI cards -->
+              <div class="dash-kpi-row">
+                <div class="dash-kpi-card">
+                  <span class="dash-kpi-label">会員数</span>
+                  <span class="dash-kpi-value">1,234</span>
+                  <span class="dash-kpi-sub">前月比 +12%</span>
+                </div>
+                <div class="dash-kpi-card">
+                  <span class="dash-kpi-label">今月のスタンプ</span>
+                  <span class="dash-kpi-value">5,678</span>
+                  <span class="dash-kpi-sub">個</span>
+                </div>
+                <div class="dash-kpi-card">
+                  <span class="dash-kpi-label">残高総額</span>
+                  <span class="dash-kpi-value">¥234,567</span>
+                  <span class="dash-kpi-sub">累積</span>
+                </div>
+                <div class="dash-kpi-card">
+                  <span class="dash-kpi-label">ギフトカード販売</span>
+                  <span class="dash-kpi-value">89</span>
+                  <span class="dash-kpi-sub">枚（今月）</span>
+                </div>
+              </div>
+
+              <!-- Row 2: Alerts -->
+              <div class="dash-alert">
+                <span class="dash-alert-line"><span class="dash-alert-mark">!</span>残高総額が 900 万円を超えました（届出義務基準値の 90%）。関東財務局への届出準備を開始してください。</span>
+                <span class="dash-alert-line"><span class="dash-alert-mark">!</span>Square OAuth トークンが残り 3 日で期限切れ。管理画面から再接続してください。</span>
+              </div>
+
+              <!-- Row 3: Lower panels -->
+              <div class="dash-lower">
+                <!-- Left: Recent transactions -->
+                <div class="dash-panel">
+                  <p class="dash-panel-head">直近の取引履歴</p>
+                  <div class="dash-tx-row">
+                    <span class="dash-tx-name">会員 #1028</span>
+                    <span class="dash-tx-type">スタンプ +2</span>
+                    <span class="dash-tx-amount">—</span>
+                  </div>
+                  <div class="dash-tx-row">
+                    <span class="dash-tx-name">会員 #0983</span>
+                    <span class="dash-tx-type">チャージ</span>
+                    <span class="dash-tx-amount">¥2,000</span>
+                  </div>
+                  <div class="dash-tx-row">
+                    <span class="dash-tx-name">会員 #1102</span>
+                    <span class="dash-tx-type">引換券使用</span>
+                    <span class="dash-tx-amount">—</span>
+                  </div>
+                  <div class="dash-tx-row">
+                    <span class="dash-tx-name">会員 #0741</span>
+                    <span class="dash-tx-type">残高払い</span>
+                    <span class="dash-tx-amount">¥680</span>
+                  </div>
+                  <div class="dash-tx-row">
+                    <span class="dash-tx-name">会員 #1234</span>
+                    <span class="dash-tx-type">新規登録</span>
+                    <span class="dash-tx-amount">—</span>
+                  </div>
+                </div>
+
+                <!-- Right: Role diagram -->
+                <div class="dash-panel">
+                  <p class="dash-panel-head">ロール別アクセス権限</p>
+                  <div class="dash-roles">
+                    <div class="dash-role-item role-owner">
+                      <span class="dash-role-name">オーナー</span>
+                      <span class="dash-role-desc">全操作 + ユーザー管理 + 設定変更</span>
+                    </div>
+                    <div class="dash-role-item">
+                      <span class="dash-role-name">店長</span>
+                      <span class="dash-role-desc">スタンプ調整 + 取引確認 + 通知確認</span>
+                    </div>
+                    <div class="dash-role-item">
+                      <span class="dash-role-name">スタッフ</span>
+                      <span class="dash-role-desc">スタンプ付与 + 引換処理のみ</span>
+                    </div>
+                    <div class="dash-role-item">
+                      <span class="dash-role-name">閲覧専用</span>
+                      <span class="dash-role-desc">KPIダッシュボードの参照のみ</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /dash-content -->
+          </div><!-- /browser-body -->
+        </div><!-- /browser-frame -->
+
+        <div class="dash-footer">
+          <span class="dash-footer-note">ロール別アクセス制御 / 監査ログ全件保管 / 1,000万円届出基準アラート / Square 接続状態モニタリング</span>
+        </div>
+
+        <div style="margin-top:6px" class="folio">13 / 18</div>
+      </div>
+    </div>
+
+    <!-- 14 LEGAL (was 12) -->
     <div class="slide" role="region" aria-label="法的整理">
       <div class="s12-inner">
         <div class="s12-left">
@@ -1161,7 +1800,7 @@ html, body {
             </div>
             <p class="caption" style="color:rgba(253,252,250,0.3);margin-top:7px">事業主体は milk tea。AN は外注エンジニアとして技術提供のみ。</p>
           </div>
-          <div class="folio" style="color:rgba(253,252,250,0.3)">12 / 16</div>
+          <div class="folio" style="color:rgba(253,252,250,0.3)">14 / 18</div>
         </div>
         <div class="s12-right">
           <div class="legal-row">
@@ -1188,16 +1827,16 @@ html, body {
       </div>
     </div>
 
-    <!-- 13 PHASE 1.5 / 2 -->
+    <!-- 15 PHASE 1.5 / 2 (was 13) -->
     <div class="slide" role="region" aria-label="将来展望">
       <div class="s13-inner">
         <div class="slide-header">
           <div>
-            <span class="index-tag">06 — Future Phases</span>
+            <span class="index-tag">07 — Future Phases</span>
             <div style="height:10px"></div>
             <h2 class="slide-title">Phase 1.5 / Phase 2 の展望</h2>
           </div>
-          <span class="slide-num-right" aria-hidden="true">13</span>
+          <span class="slide-num-right" aria-hidden="true">15</span>
         </div>
         <div class="rule-h feature-rule"></div>
         <div class="phase-split">
@@ -1231,7 +1870,7 @@ html, body {
       </div>
     </div>
 
-    <!-- 14 ESTIMATE -->
+    <!-- 16 ESTIMATE (was 14) -->
     <div class="slide" role="region" aria-label="見積とスケジュール">
       <div class="s14-inner">
         <div class="s14-left">
@@ -1246,7 +1885,7 @@ html, body {
             <p class="price-sub">税別・一括・固定価格<br>141–214h、追加請求なし（Phase 1 スコープ内）<br>物理ギフトカード対応含む（判断2.11）</p>
             <div style="height:14px"></div>
           </div>
-          <div class="folio">14 / 16</div>
+          <div class="folio">16 / 18</div>
         </div>
         <div class="s14-right">
           <span class="index-tag">Two-Stage Schedule</span>
@@ -1280,16 +1919,16 @@ html, body {
       </div>
     </div>
 
-    <!-- 15 IP -->
+    <!-- 17 IP (was 15) -->
     <div class="slide" role="region" aria-label="知財帰属と契約形態">
       <div class="s15-inner">
         <div class="slide-header">
           <div>
-            <span class="index-tag">07 — IP &amp; Agreement</span>
+            <span class="index-tag">08 — IP &amp; Agreement</span>
             <div style="height:10px"></div>
             <h2 class="slide-title">知財帰属と<br>契約形態</h2>
           </div>
-          <span class="slide-num-right" aria-hidden="true">15</span>
+          <span class="slide-num-right" aria-hidden="true">17</span>
         </div>
         <div class="rule-h feature-rule"></div>
         <div class="ip-grid">
@@ -1330,12 +1969,12 @@ html, body {
       </div>
     </div>
 
-    <!-- 16 CLOSING -->
+    <!-- 18 CLOSING (was 16) -->
     <div class="slide s16" role="region" aria-label="次のステップ">
       <div class="s16-inner">
         <div class="s16-top">
           <span class="s16-brand">Tamary — milk tea カードアプリ</span>
-          <span class="folio" style="color:rgba(184,152,90,0.5)">16 / 16</span>
+          <span class="folio" style="color:rgba(184,152,90,0.5)">18 / 18</span>
         </div>
         <div class="s16-middle">
           <div class="s16-main-message">
@@ -1390,13 +2029,13 @@ html, body {
       <path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-  <span class="nav-folio" id="navFolio" aria-live="polite">01 / 16</span>
+  <span class="nav-folio" id="navFolio" aria-live="polite">01 / 18</span>
 </nav>
 
 <script>
 (function() {
   'use strict';
-  var TOTAL = 16;
+  var TOTAL = 18;
   var current = 0;
   var isAnimating = false;
   var track    = document.getElementById('track');
