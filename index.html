@@ -389,7 +389,8 @@ html, body {
 .expiry-label { font-family: var(--f-latin); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
 .expiry-object { font-family: var(--f-sans); font-weight: 700; font-size: clamp(13px,1.5vw,17px); color: var(--ink); margin-bottom: 5px; }
 .expiry-period { font-family: var(--f-latin); font-weight: 900; font-size: clamp(36px,5vw,64px); line-height: 0.9; color: var(--ink); letter-spacing: -0.04em; margin-bottom: 3px; }
-.expiry-unit { font-family: var(--f-sans); font-size: 12px; font-weight: 400; color: var(--ink-mid); }
+.expiry-unit { font-family: var(--f-sans); font-size: 12px; font-weight: 400; color: var(--ink-mid); word-break: keep-all; }
+.expiry-cell p { word-break: keep-all; overflow-wrap: break-word; line-break: strict; }
 .expiry-base { font-family: var(--f-latin); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-light); margin-top: 7px; text-transform: uppercase; }
 
 .notify-section {
@@ -736,7 +737,7 @@ html, body {
         <div class="s02-right">
           <span class="index-tag" style="color:var(--ink-light)">Solution</span>
           <div style="height:24px"></div>
-          <p class="s02-large-word">来店<br>頻度を<br>仕組み<br>で作る</p>
+          <p class="s02-large-word">来店頻度を<br>仕組みで作る</p>
           <p class="s02-tagline">スタンプと特典が<br>「もう一杯行きたい理由」を<br>自動的に生み出す</p>
         </div>
       </div>
@@ -894,7 +895,7 @@ html, body {
         </div>
         <div class="s06-right">
           <span class="s06-right-label">Prepaid Balance</span>
-          <p class="s06-right-big">先<br>払い<br>で<br>固定客</p>
+          <p class="s06-right-big">先払いで<br>固定客</p>
           <p class="s06-right-desc">残高がアプリに貯まっていると、他の店ではなく milk tea を選ぶ動機が自然に生まれます。</p>
           <div style="height:1px;background:rgba(253,252,250,0.08)"></div>
           <p class="s06-right-desc" style="font-size:11px;color:rgba(253,252,250,0.4)">未使用残高が1,000万円を超えた場合は関東財務局への届出が必要（管理画面で常時把握可、800–900万円で自動アラート）。</p>
@@ -923,7 +924,7 @@ html, body {
               <p class="expiry-unit">ヶ月</p>
               <p class="expiry-base">最終付与日から起算</p>
             </div>
-            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px">6ヶ月以内に追加付与があれば起算日更新→失効回避</p>
+            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px;word-break:keep-all">6ヶ月以内に追加付与があれば<br>起算日更新→失効回避</p>
           </div>
           <div class="expiry-cell">
             <div>
@@ -933,7 +934,7 @@ html, body {
               <p class="expiry-unit">年</p>
               <p class="expiry-base">発行日から起算</p>
             </div>
-            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px">発行から1年で失効。起算日の更新なし</p>
+            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px;word-break:keep-all">発行から1年で失効<br>起算日の更新なし</p>
           </div>
           <div class="expiry-cell">
             <div>
@@ -943,7 +944,7 @@ html, body {
               <p class="expiry-unit">ヶ月</p>
               <p class="expiry-base">最終利用日から起算</p>
             </div>
-            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px">6ヶ月以内の利用で起算日更新。資金決済法セーフハーバー適合</p>
+            <p style="font-family:var(--f-sans);font-size:11px;color:var(--ink-light);line-height:17px;margin-top:8px;word-break:keep-all">6ヶ月以内の利用で起算日更新<br>資金決済法セーフハーバー適合</p>
           </div>
         </div>
         <div class="notify-section">
